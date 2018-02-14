@@ -1,4 +1,4 @@
-const ActionsSdkApp = require('actions-on-google').ActionsSdkApp;
+const ActionsSdkApp = require('actions-on-google').DialogflowApp;
 var config = require('./config');
 var responses = {};
 
@@ -38,12 +38,12 @@ responses.generateResponse = function(req, res){
 }
 suggestionChips  = function(appHandler, content, contentType){
 	console.log(content, contentType);
-	/*  appHandler.ask(appHandler.buildRichResponse()
+	  appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
 		.addSuggestions(content)			
 	  );	
-	  */var chips = [];		
+	  /*var chips = [];		
 		content.forEach(function(key){
 			chips.push({'title':key,"text":"hari"});
 		});
@@ -65,7 +65,7 @@ suggestionChips  = function(appHandler, content, contentType){
 			  "speech": ""
 			}
 			]
-		};
+		};*/
 	  console.log('hari');
 	//return true;
 }
