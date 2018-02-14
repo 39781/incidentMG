@@ -49,8 +49,7 @@ processRequest = function(req, res){
 				return serviceNowApi.createIncident(responseJson.sessionId);
 			}else if(responseJson.action == 'track'){
 				return serviceNowApi.trackIncident(responseJson.incNum,responseJson.sessionId);
-			}else{
-				console.log('testing 1');
+			}else{				
 				return responseJson;
 			}
 			//responseJson.contextOut = inputContexts;						

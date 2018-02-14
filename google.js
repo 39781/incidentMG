@@ -2,8 +2,7 @@ const ActionsSdkApp = require('actions-on-google').ActionsSdkApp;
 var config = require('./config');
 var responses = {};
 
-responses.generateResponse = function(req, res){
-		
+responses.generateResponse = function(req, res){		
 	return new Promise(function(resolve, reject){		
 		console.log('generate response started');
 		
@@ -26,7 +25,7 @@ responses.generateResponse = function(req, res){
 			inputPrompts(req, res)	
 			.then((result)=>{
 				console.log('response from inputpromt',result);
-				resolve(true);
+				resolve(result);
 			})
 			.catch((err)=>{
 				reject(err);
@@ -36,12 +35,40 @@ responses.generateResponse = function(req, res){
 }
 suggestionChips  = function(appHandler, content, contentType){
 	console.log(content, contentType);
-	  appHandler.ask(appHandler.buildRichResponse()
+	/*  appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
 		.addSuggestions(content)			
-	  );		
-	return true;
+	  );		*/
+	 return {
+      "speech": "",
+      "messages": [
+        {
+          "type": "simple_response",
+          "platform": "google",
+          "textToSpeech": "Hi, I am IncidentMG bot, I can help you to create incident tickets, track incident tickets.",
+          "displayText": "Hi, I am IncidentMG bot, I can help you to create incident tickets, track incident tickets. Please choose any one option from below I can assist you. The following commands help you in bot  traverse.  Quit or Exit : stop converstion, Back to Menu or startOver or star:  start conversation from begin."
+        },
+        {
+          "type": "suggestion_chips",
+          "platform": "google",
+          "suggestions": [
+            {
+              "title": "Create Incident"
+            },
+            {
+              "title": "Track Incident"
+            }
+          ]
+        },
+        {
+          "type": 0,
+          "speech": ""
+        }
+      ]
+    }
+	  console.log('hari');
+	//return true;
 }
 
 function inputPrompts(req, res){
@@ -49,25 +76,29 @@ function inputPrompts(req, res){
 	return new Promise(function(resolve, reject){	
 		
 		appHandler	= new ActionsSdkApp({request: req, response: res});
-		
-		let actionMap = new Map();	
-		actionMap.set(appHandler.StandardIntents.TEXT suggestionChips);
-		//actionMap.set('createIncident', suggestionChips);	
-		
-		appHandler.handleRequest(actionMap);
-		
-		console.log('input prompting started');
-		if(typeof(incidentParams['category'])=='undefined'){
-			resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'))
-		}else if(typeof(incidentParams['subCategory'])=='undefined'){
-			resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'));
-		}else if(typeof(incidentParams['contactType'])=='undefined'){
-			resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'));
-		}else if(typeof(incidentParams['impact'])=='undefined'){
-			resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'));
-		}else if(typeof(incidentParams['urgency'])=='undefined'){
-			resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
-		}
+		try{
+			/*let actionMap = new Map();	
+			actionMap.set('createIncident', suggestionChips);
+			actionMap.set('defaultIntent', suggestionChips);
+			actionMap.set(appHandler.StandardIntents.TEXT, suggestionChips)
+			//actionMap.set(actions.intent.TEXT)
+			//actionMap.set('createIncident', suggestionChips);	
+			
+			appHandler.handleRequest(actionMap);*/
+			
+			console.log('input prompting started');
+			if(typeof(incidentParams['category'])=='undefined'){
+				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'))
+			}else if(typeof(incidentParams['subCategory'])=='undefined'){
+				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'));
+			}else if(typeof(incidentParams['contactType'])=='undefined'){
+				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'));
+			}else if(typeof(incidentParams['impact'])=='undefined'){
+				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'));
+			}else if(typeof(incidentParams['urgency'])=='undefined'){
+				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
+			}
+		}catch(err){console.log('error',err);reject(err);}	
 		
 	});	
 }
