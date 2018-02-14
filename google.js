@@ -23,7 +23,7 @@ responses.generateResponse = function(req, res){
 		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams);
 		if(incidentParamsKeys.length>=5){
-			resolve(true);
+			resolve('create');
 		}else{
 			inputPrompts(req, res)	
 			.then((result)=>{
