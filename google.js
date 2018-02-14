@@ -44,13 +44,13 @@ suggestionChips  = function(appHandler, content, contentType){
 		content.forEach(function(key){
 			chips.push({'title':key});
 		});
-		var suggResp =	 {
+		return {
 			"speech": "",
 			"messages": [{
 				"type": "simple_response",
 				"platform": "google",
 				"textToSpeech": "Please select option from "+contentType,
-				"displayText": "Please select option from "+contactType
+				"displayText": "Please select option from "+contentType
 			},
 			{
 			  "type": "suggestion_chips",
