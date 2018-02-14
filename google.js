@@ -17,7 +17,7 @@ responses.generateResponse = function(req, res){
 				incidentParams[key] = req.body.result.parameters[key];
 			}
 		});	
-		
+		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams);
 		if(incidentParamsKeys.length>=5){
 			resolve(true);
