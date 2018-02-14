@@ -12,38 +12,37 @@ var serviceNowApi = {
 					'content-type': 'application/json' 
 				},
 				body:{ 
-					short_description	: 	'testing incident',
-					caller_id			: 	'TST',
-					Caller				:	incidentTickets[sessId].caller,
-					urgency				: 	incidentTickets[sessId].urgency,
-					state				:	incidentTickets[sessId].state,
-					incident_state		:	incidentTickets[sessId].incidentState,
-					category			:	incidentTickets[sessId].category,
-					subcategory			:	incidentTickets[sessId].subCategory,
+					short_description	: 	incidentTickets.sdec,
+					caller_id			: 	'TST',					
+					urgency				: 	incidentTickets.urgency,
+					category			:	incidentTickets.category,
+					subcategory			:	incidentTickets.subCategory,
 					//workingGroup		:	incidentTickets[sessId].workingGroup,
-					impact				:	incidentTickets[sessId].impact,
-					priority			:	incidentTickets[sessId].priority,
-					contact_type		:	incidentTickets[sessId].contactType,
-					comments			: 	'Chatbot Testing',
-					Assigned_to			:	incidentTickets[sessId].assignedTo		
+					impact				:	incidentTickets.impact,					
+					contact_type		:	incidentTickets.contactType,
+					comments			: 	'Chatbot Testing'					
 				},			
 				json: true 
 			}; 
-			delete incidentTickets[sessId];		
+			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {
-				var rsp = {  
-						"speech":"",
-						"displayText":"",
-						"data":{  
-							"facebook":{  
-								"text":	""
-							}
-						}
+				var rsp ={			
+					"speech": "",
+					"messages": [{
+						"type": "simple_response",
+						"platform": "google",
+						"textToSpeech": "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference",
+						"displayText": "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
+					},
+					{
+					  "type": 0,
+					  "speech": ""
 					}
+					]
+				}				
 				if (error) {
-					rsp.data.facebook.text = JSON.stringify(error);
-				}else{			
-					rsp.data.facebook.text = "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference" 	
+					rsp.messages.displayText = JSON.stringify(error);
+					rsp.messages.textToSpeech = rsp.messages.displayText;
 				}
 				resolve(rsp);
 			});

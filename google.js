@@ -101,6 +101,8 @@ function inputPrompts(req, res){
 			}else if(typeof(incidentParams['urgency'])=='undefined'){
 				recentInput = 'urgency';
 				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
+			}else{
+				resolve('create');
 			}
 		}catch(err){console.log('error',err);reject(err);}	
 		
