@@ -9,7 +9,7 @@ global.incidentTickets = {};
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(bodyParser.json());
 app.use(routes);
-
+global.incidentParams = {};
 var server = app.listen(port,function(){
 	console.log("Application started listening port "+port);
 	

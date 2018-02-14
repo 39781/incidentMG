@@ -6,7 +6,6 @@ var config ={
 		contactType 	: ['Email','Phone','Self-service','Walk-in'],		
 		impact 			: ['High','Medium','Low'],
 		urgency 		: ['High','Medium','Low'],		
-		caller			: ['Hariprasad','Harikrishna']		
 	},	
 }
 module.exports = config;
