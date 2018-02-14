@@ -25,6 +25,7 @@ responses.generateResponse = function(req, res){
 		}else{
 			inputPrompts(req, res)	
 			.then((result)=>{
+				console.log('response from inputpromt',result);
 				resolve(true);
 			})
 			.catch((err)=>{
@@ -33,7 +34,7 @@ responses.generateResponse = function(req, res){
 		}		
 	});
 }
-suggestionChips  = function(appHandler, req, res, content, contentType){
+suggestionChips  = function(appHandler, content, contentType){
 	console.log(content, contentType);
 	  appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
@@ -50,23 +51,24 @@ function inputPrompts(req, res){
 		appHandler	= new ActionsSdkApp({request: req, response: res});
 		
 		let actionMap = new Map();	
-		actionMap.set('defaultIntent', suggestionChips);
-		actionMap.set('createIncident', suggestionChips);	
+		actionMap.set(appHandler.StandardIntents.TEXT suggestionChips);
+		//actionMap.set('createIncident', suggestionChips);	
 		
 		appHandler.handleRequest(actionMap);
 		
 		console.log('input prompting started');
 		if(typeof(incidentParams['category'])=='undefined'){
-			resolve(suggestionChips(appHandler,req, res, config.serviceNow['category'],'category'))
+			resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'))
 		}else if(typeof(incidentParams['subCategory'])=='undefined'){
-			resolve(suggestionChips(appHandler,req, res, config.serviceNow['subCategory'],'subCategory'));
+			resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'));
 		}else if(typeof(incidentParams['contactType'])=='undefined'){
-			resolve(suggestionChips(appHandler,req, res, config.serviceNow['contactType'],'contactType'));
+			resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'));
 		}else if(typeof(incidentParams['impact'])=='undefined'){
-			resolve(suggestionChips(appHandler,req, res, config.serviceNow['impact'],'impact'));
+			resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'));
 		}else if(typeof(incidentParams['urgency'])=='undefined'){
-			resolve(suggestionChips(appHandler, req, res, config.serviceNow['urgency'],'urgency'));
+			resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
 		}
+		
 	});	
 }
 
