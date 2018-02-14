@@ -6,6 +6,7 @@ var session = require('express-session');
 var port = process.env.PORT || 3000;
 app.use(session({ secret: 'this-is-a-secret-token',resave: true, saveUninitialized: true, cookie: { maxAge: 60000 }}));
 global.incidentTickets = {};
+global.recentInput = "";
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(bodyParser.json());
 app.use(routes);

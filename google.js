@@ -18,7 +18,7 @@ responses.generateResponse = function(req, res){
 			}
 		});	
 		if(!params.length){
-			incidentParams[key] = resolvedQuery;
+			incidentParams[recentInput] = resolvedQuery;
 		}
 		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams);
