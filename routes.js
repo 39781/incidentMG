@@ -1,7 +1,7 @@
 var express 		= require('express');
 var router			= express.Router();	 
 var DialogflowApp	=	require('actions-on-google').DialogflowApp;
-var request			=	require('request');
+
 var serviceNowApi 	=	require('./serviceNow');
 var sNow 			= 	require('./config');
 
