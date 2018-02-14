@@ -1,6 +1,6 @@
 var serviceNowApi = {
 	createIncident:function (sessId){
-		console.log('creation started',incidentTickets[sessId]);		
+		//console.log('creation started',incidentTickets[sessId]);		
 		return new Promise(function(resolve,reject){
 			var options = { 
 				method: 'POST',
@@ -12,14 +12,14 @@ var serviceNowApi = {
 					'content-type': 'application/json' 
 				},
 				body:{ 
-					short_description	: 	incidentTickets.sdec,
+					short_description	: 	incidentParams.sdec,
 					caller_id			: 	'TST',					
-					urgency				: 	incidentTickets.urgency,
-					category			:	incidentTickets.category,
-					subcategory			:	incidentTickets.subCategory,
+					urgency				: 	incidentParams.urgency,
+					category			:	incidentParams.category,
+					subcategory			:	incidentParams.subCategory,
 					//workingGroup		:	incidentTickets[sessId].workingGroup,
-					impact				:	incidentTickets.impact,					
-					contact_type		:	incidentTickets.contactType,
+					impact				:	incidentParams.impact,					
+					contact_type		:	incidentParams.contactType,
 					comments			: 	'Chatbot Testing'					
 				},			
 				json: true 
