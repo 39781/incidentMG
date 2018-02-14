@@ -45,7 +45,7 @@ suggestionChips  = function(appHandler, content, contentType){
 	  );	
 	  */var chips = [];		
 		content.forEach(function(key){
-			chips.push({'title':key});
+			chips.push({'title':key,"text":"hari"});
 		});
 		return {
 			"contentType":contentType,
