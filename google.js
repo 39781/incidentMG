@@ -39,34 +39,30 @@ suggestionChips  = function(appHandler, content, contentType){
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
 		.addSuggestions(content)			
-	  );		*/
-	 return {
-      "speech": "",
-      "messages": [
-        {
-          "type": "simple_response",
-          "platform": "google",
-          "textToSpeech": "Hi, I am IncidentMG bot, I can help you to create incident tickets, track incident tickets.",
-          "displayText": "Hi, I am IncidentMG bot, I can help you to create incident tickets, track incident tickets. Please choose any one option from below I can assist you. The following commands help you in bot  traverse.  Quit or Exit : stop converstion, Back to Menu or startOver or star:  start conversation from begin."
-        },
-        {
-          "type": "suggestion_chips",
-          "platform": "google",
-          "suggestions": [
-            {
-              "title": "Create Incident"
-            },
-            {
-              "title": "Track Incident"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "speech": ""
-        }
-      ]
-    }
+	  );	
+	  */var chips = [];		
+		content.forEach(function(key){
+			chips.push({'title':key});
+		});
+		var suggResp =	 {
+			"speech": "",
+			"messages": [{
+				"type": "simple_response",
+				"platform": "google",
+				"textToSpeech": "Please select option from "+contentType,
+				"displayText": "Please select option from "+contactType
+			},
+			{
+			  "type": "suggestion_chips",
+			  "platform": "google",
+			  "suggestions":chips
+			},
+			{
+			  "type": 0,
+			  "speech": ""
+			}
+			]
+		};
 	  console.log('hari');
 	//return true;
 }
