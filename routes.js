@@ -3,8 +3,9 @@ var router			= express.Router();
 var DialogflowApp	=	require('actions-on-google').DialogflowApp;
 var request			=	require('request');
 var serviceNowApi 	=	require('./serviceNow');
-var sNow 	= 	require('./config');
+var sNow 			= 	require('./config');
 
+//var botResponses = require('./google.js');
 router.get('/',function(req, res){
 	console.log('req received');
 	res.send("req received");
@@ -36,10 +37,11 @@ router.post('/botHandler',function(req, res){
 
 processRequest = function(req, res){
 	return new Promise(function(resolve, reject){		
-		
+		console.log(' process request started');
 		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
-		
+		console.log(requestSource);
 		var botResponses = require('./'+requestSource);		
+		
 		botResponses.generateResponse(req, res)
 		.then(function(responseJson){
 			console.log(responseJson);
@@ -58,6 +60,7 @@ processRequest = function(req, res){
 			resolve(resp);
 		})
 		.catch(function(err){
+			console.log(err);
 			reject(err);
 		})	
 		
