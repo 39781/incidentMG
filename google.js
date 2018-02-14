@@ -18,7 +18,7 @@ responses.generateResponse = function(req, res){
 			}
 		});	
 		if(!params.length){
-			
+			incidentParams[key] = resolvedQuery;
 		}
 		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams);
@@ -47,8 +47,7 @@ suggestionChips  = function(appHandler, content, contentType){
 		content.forEach(function(key){
 			chips.push({'title':key,"text":"hari"});
 		});
-		return {
-			"contentType":contentType,
+		return {			
 			"speech": "",
 			"messages": [{
 				"type": "simple_response",
@@ -88,14 +87,19 @@ function inputPrompts(req, res){
 			
 			console.log('input prompting started');
 			if(typeof(incidentParams['category'])=='undefined'){
+				recentInput = 'category';
 				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'))
 			}else if(typeof(incidentParams['subCategory'])=='undefined'){
+				recentInput = 'subCategory';
 				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'));
 			}else if(typeof(incidentParams['contactType'])=='undefined'){
+				recentInput = 'contactType';
 				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'));
 			}else if(typeof(incidentParams['impact'])=='undefined'){
+				recentInput = 'impact';
 				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'));
 			}else if(typeof(incidentParams['urgency'])=='undefined'){
+				recentInput = 'urgency';
 				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
 			}
 		}catch(err){console.log('error',err);reject(err);}	
