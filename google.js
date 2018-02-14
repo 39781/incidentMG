@@ -14,7 +14,7 @@ responses.generateResponse = function(req, res){
 		
 		params.forEach(function(key){
 			if(req.body.result.parameters[key].length>0){
-				incidentParams[key] = inputContexts[0].parameters[key].original;
+				incidentParams[key] = inputContexts[0].parameters[key+.'original'];
 			}
 		});	
 		if(!params.length){
