@@ -9,7 +9,7 @@ responses.generateResponse = function(req, res){
 		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
-		
+		var resolvedQuery = req.body.result.resolvedQuery;
 		var params = Object.keys(req.body.result.parameters);
 		
 		params.forEach(function(key){
@@ -17,6 +17,9 @@ responses.generateResponse = function(req, res){
 				incidentParams[key] = req.body.result.parameters[key];
 			}
 		});	
+		if(!params.length){
+			
+		}
 		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams);
 		if(incidentParamsKeys.length>=5){
@@ -45,6 +48,7 @@ suggestionChips  = function(appHandler, content, contentType){
 			chips.push({'title':key});
 		});
 		return {
+			"contentType":contentType
 			"speech": "",
 			"messages": [{
 				"type": "simple_response",
