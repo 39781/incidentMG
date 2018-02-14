@@ -48,7 +48,7 @@ suggestionChips  = function(appHandler, content, contentType){
 			chips.push({'title':key});
 		});
 		return {
-			"contentType":contentType
+			"contentType":contentType,
 			"speech": "",
 			"messages": [{
 				"type": "simple_response",
