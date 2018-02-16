@@ -103,19 +103,19 @@ function inputPrompts(req, res){
 			console.log('input prompting started');
 			if(typeof(incidentParams['category'])=='undefined'){
 				recentInput = 'category';
-				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'), req.body.result.parameters)
+				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category',req.body.result.parameters))
 			}else if(typeof(incidentParams['subCategory'])=='undefined'){
 				recentInput = 'subCategory';
-				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'), req.body.result.parameters);
+				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory', req.body.result.parameters));
 			}else if(typeof(incidentParams['contactType'])=='undefined'){
 				recentInput = 'contactType';
-				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'), req.body.result.parameters);
+				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType', req.body.result.parameters));
 			}else if(typeof(incidentParams['impact'])=='undefined'){
 				recentInput = 'impact';
-				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'), req.body.result.parameters);
+				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact', req.body.result.parameters));
 			}else if(typeof(incidentParams['urgency'])=='undefined'){
 				recentInput = 'urgency';
-				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'), req.body.result.parameters);
+				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency', req.body.result.parameters));
 			}else{
 				resolve('create');
 			}
