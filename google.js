@@ -89,7 +89,7 @@ function inputPrompts(req, res){
 	
 	return new Promise(function(resolve, reject){	
 		
-		//appHandler	= new ActionsSdkApp({request: req, response: res});
+		appHandler	= new ActionsSdkApp({request: req, response: res});
 		try{
 			/*let actionMap = new Map();	
 			actionMap.set('createIncident', suggestionChips);
