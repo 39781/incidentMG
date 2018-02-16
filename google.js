@@ -38,16 +38,16 @@ responses.generateResponse = function(req, res){
 }
 suggestionChips  = function(appHandler, content, contentType, params){
 	console.log(content, contentType);
-	  appHandler.ask(appHandler.buildRichResponse()
+	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
 		.addSuggestions(content)			
-	  );	
-	  /*return true;
+	  );*/	
+	  //return true;
 	  var chips = [];		
 		content.forEach(function(key){
 			chips.push({'title':key});
-		});*/
+		});
 		intentContextParams ={};
 		var paramsKeys = Object.keys(params);		
 		paramsKeys.forEach(function(key){
@@ -63,7 +63,7 @@ suggestionChips  = function(appHandler, content, contentType, params){
 				 "name":"createincident_dialog_context", 
 				 "lifespan":2, 
 				 "parameters":intentContextParams
-			}]/*,
+			}],
 			"messages": [{
 				"type": "simple_response",
 				"platform": "google",
@@ -79,7 +79,7 @@ suggestionChips  = function(appHandler, content, contentType, params){
 			  "type": 0,
 			  "speech": ""
 			}
-			]*/
+			]
 		};
 	  //console.log('hari');
 	//return true;
@@ -89,7 +89,7 @@ function inputPrompts(req, res){
 	
 	return new Promise(function(resolve, reject){	
 		
-		appHandler	= new ActionsSdkApp({request: req, response: res});
+		//appHandler	= new ActionsSdkApp({request: req, response: res});
 		try{
 			/*let actionMap = new Map();	
 			actionMap.set('createIncident', suggestionChips);

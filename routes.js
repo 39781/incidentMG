@@ -44,8 +44,7 @@ processRequest = function(req, res){
 		var botResponses = require('./'+requestSource);		
 		
 		botResponses.generateResponse(req, res)
-		.then(function(responseJson){
-			console.log(responseJson);
+		.then(function(responseJson){			
 			if(responseJson == 'create')	{			
 				return serviceNowApi.createIncident(responseJson.sessionId);
 			}else if(responseJson == 'track'){
