@@ -36,19 +36,34 @@ responses.generateResponse = function(req, res){
 		}		
 	});
 }
-suggestionChips  = function(appHandler, content, contentType){
+suggestionChips  = function(appHandler, content, contentType, params){
 	console.log(content, contentType);
 	  appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
 		.addSuggestions(content)			
 	  );	
-	  /*var chips = [];		
+	  /*return true;
+	  var chips = [];		
 		content.forEach(function(key){
-			chips.push({'title':key,"text":"hari"});
-		});
+			chips.push({'title':key});
+		});*/
+		intentContextParams ={};
+		var paramsKeys = Object.keys(params);		
+		paramsKeys.forEach(function(key){
+			if(params[key].length>0){
+				intentContextParams[key] = params[key];
+			}
+		});	
+		
+		console.log(intentContextParams);
 		return {			
 			"speech": "",
+			"contextOut": [{
+				 "name":"createincident_dialog_context", 
+				 "lifespan":2, 
+				 "parameters":intentContextParams
+			}]/*,
 			"messages": [{
 				"type": "simple_response",
 				"platform": "google",
@@ -64,9 +79,9 @@ suggestionChips  = function(appHandler, content, contentType){
 			  "type": 0,
 			  "speech": ""
 			}
-			]
-		};*/
-	  console.log('hari');
+			]*/
+		};
+	  //console.log('hari');
 	//return true;
 }
 
@@ -74,7 +89,7 @@ function inputPrompts(req, res){
 	
 	return new Promise(function(resolve, reject){	
 		
-		appHandler	= new ActionsSdkApp({request: req, response: res});
+		//appHandler	= new ActionsSdkApp({request: req, response: res});
 		try{
 			/*let actionMap = new Map();	
 			actionMap.set('createIncident', suggestionChips);
@@ -88,19 +103,19 @@ function inputPrompts(req, res){
 			console.log('input prompting started');
 			if(typeof(incidentParams['category'])=='undefined'){
 				recentInput = 'category';
-				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'))
+				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category'), req.body.result.parameters)
 			}else if(typeof(incidentParams['subCategory'])=='undefined'){
 				recentInput = 'subCategory';
-				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'));
+				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory'), req.body.result.parameters);
 			}else if(typeof(incidentParams['contactType'])=='undefined'){
 				recentInput = 'contactType';
-				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'));
+				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType'), req.body.result.parameters);
 			}else if(typeof(incidentParams['impact'])=='undefined'){
 				recentInput = 'impact';
-				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'));
+				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact'), req.body.result.parameters);
 			}else if(typeof(incidentParams['urgency'])=='undefined'){
 				recentInput = 'urgency';
-				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'));
+				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency'), req.body.result.parameters);
 			}else{
 				resolve('create');
 			}

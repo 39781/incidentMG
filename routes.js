@@ -14,15 +14,16 @@ router.get('/',function(req, res){
 
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));		
-	res.status(200);	
-			
+	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));						
 	if (req.body.result||req.body.queryResult) {
 		processRequest(req, res)
-		.then(function(responseJson){
-			console.log(JSON.stringify(responseJson));
-				res.status(200);
-			res.json(responseJson).end();
+		.then(function(responseJson){			
+			res.status(200);
+			if(typeof(responseJson)=='object'){
+				res.json(responseJson).end();
+			}else{
+				res.end();
+			}
 		})
 		.catch(function(err){
 			res.status(400);
@@ -47,7 +48,7 @@ processRequest = function(req, res){
 			console.log(responseJson);
 			if(responseJson == 'create')	{			
 				return serviceNowApi.createIncident(responseJson.sessionId);
-			}else if(responseJson.action == 'track'){
+			}else if(responseJson == 'track'){
 				return serviceNowApi.trackIncident(responseJson.incNum,responseJson.sessionId);
 			}else{				
 				return responseJson;
