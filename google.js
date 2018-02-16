@@ -4,12 +4,12 @@ var responses = {};
 
 responses.generateResponse = function(req, res){		
 	return new Promise(function(resolve, reject){		
-		console.log('generate response started');
+		console.log('generate response started',req.body.result.parameters);
 		
 		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
-		var resolvedQuery = req.body.result.resolvedQuery;
+		var resolvedQuery = req.body.result.resolvedQuery;		
 		var params = Object.keys(req.body.result.parameters);
 		
 		params.forEach(function(key){
@@ -56,7 +56,7 @@ suggestionChips  = function(appHandler, content, contentType, params){
 			}
 		});	
 		
-		console.log(intentContextParams);
+		console.log('intentContextParams',intentContextParams);
 		return {			
 			"speech": "",
 			"contextOut": [{
