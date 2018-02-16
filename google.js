@@ -60,7 +60,7 @@ suggestionChips  = function(appHandler, content, contentType, params){
 		return {			
 			"speech": "",
 			"contextOut": [{
-				 "name":"createincident_dialog_context", 
+				 "name":"createincident", 
 				 "lifespan":2, 
 				 "parameters":intentContextParams
 			}],
