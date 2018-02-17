@@ -25,15 +25,14 @@ var serviceNowApi = {
 				},			
 				json: true 
 			}; 
+			console.log();
 			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {
 				var rsp ={			
 					"speech": "",
 					"messages": [{
 						"type": "simple_response",
-						"platform": "google",
-						"textToSpeech": "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference",
-						"displayText": "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
+						"platform": "google",						
 					},
 					{
 					  "type": 0,
@@ -42,8 +41,12 @@ var serviceNowApi = {
 					]
 				}				
 				if (error) {
+					console.lg(error);
 					rsp.messages.displayText = JSON.stringify(error);
 					rsp.messages.textToSpeech = rsp.messages.displayText;
+				}else{
+					rsp.messages.textToSpeech: "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference",
+						rsp.messages.displayText: "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
 				}
 				resolve(rsp);
 			});
