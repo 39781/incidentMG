@@ -28,6 +28,7 @@ var serviceNowApi = {
 			console.log();
 			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {
+				console.log(body);
 				var rsp ={			
 					"speech": "",
 					"messages": [{
