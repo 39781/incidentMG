@@ -114,7 +114,7 @@ var serviceNowApi = {
 					textToSpeech :"Please enter valid incident number",
 				})				
 				rsp.followEvent ={
-					name:"b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context",
+					name:"trackIncident",
 					data:{},
 				}					
 				resolve(rsp);
