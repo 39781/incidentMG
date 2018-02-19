@@ -105,11 +105,20 @@ var serviceNowApi = {
 					console.log('rsp',JSON.stringify(rsp));*/				
 					resolve(true);					
 				});
-				delete incidentTickets[sessId];
+				//delete incidentTickets[sessId];
 			}else{
 				rsp ={			
 					"speech": "",
 					displayText:"Please enter valid incident number",	
+					messages:[{
+						"type": "simple_response",
+						"platform": "google",						
+						displayText :"Please enter valid incident number",
+						textToSpeech :"Please enter valid incident number",
+					},{
+						  "type": 0,
+						  "speech": ""
+						}]
 					followEvent :{
 						name:"trackIncident",
 						data:{},
