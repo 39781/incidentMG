@@ -20,6 +20,7 @@ router.post('/botHandler',function(req, res){
 		.then(function(responseJson){			
 			res.status(200);
 			if(typeof(responseJson)=='object'){
+				console.log('responseJSON',responseJson,JSON.stringify(responseJson));								
 				res.json(responseJson).end();
 			}else{
 				res.end();
@@ -41,8 +42,7 @@ processRequest = function(req, res){
 		console.log(' process request started');		
 		
 		generateResponse(req, res)
-		.then(function(responseJson){	
-			console.log('responseJSON',responseJson);								
+		.then(function(responseJson){				
 			resolve(responseJson);
 		})
 		.catch(function(err){

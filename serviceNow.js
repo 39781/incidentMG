@@ -26,8 +26,7 @@ var serviceNowApi = {
 				json: true 
 			}; 			
 			//delete incidentTickets[sessId];		
-			request(options, function (error, response, body) {
-				console.log(body);
+			request(options, function (error, response, body) {				
 				var rsp ={			
 					"speech": "",
 					"messages": [{
@@ -46,7 +45,7 @@ var serviceNowApi = {
 					rsp.messages.textToSpeech = rsp.messages.displayText;
 				}else{
 					rsp.messages.textToSpeech= "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference",
-						rsp.messages.displayText= "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
+					rsp.messages.displayText= "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
 				}
 				resolve(rsp);
 			});
