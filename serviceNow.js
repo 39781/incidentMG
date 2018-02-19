@@ -119,7 +119,7 @@ var serviceNowApi = {
 						  "type": 0,
 						  "speech": ""
 						}],
-					followEvent :{
+					followupEvent :{
 						name:"trackIncident",
 						data:{},
 					}	
