@@ -79,7 +79,7 @@ var serviceNowApi = {
 							txtMsg = "no record found for incident number you entered";							
 						}else{							
 							txtMsg = "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference";
-						}					
+						}								
 						resolve(txtMsg);		
 					}
 				});

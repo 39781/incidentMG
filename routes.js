@@ -69,16 +69,16 @@ generateResponse = function(req, res){
 			serviceNowApi.trackIncident(req.body.result.parameters)
 			.then((result)=>{
 				if(result == "Please enter valid incident number"){	
-					return botResponses.getSimpleReponse(result.msg,'trackIncident',req.body.result.parameters);
+					return botResponses.getSimpleResponse(result,'trackIncident',req.body.result.parameters);
 				}else{
-					return botResponses.getSimpleReponse(result.msg,null,null);
+					return botResponses.getSimpleResponse(result,null,null);
 				}
 			})
 			.then((resp)=>{
 				resolve(resp);
 			})	
 			.catch((err)=>{
-				resolve(botResponses.getSimpleReponse(err,null,null));				
+				resolve(botResponses.getSimpleResponse(err,null,null));				
 			})
 		}else{		
 			if(typeof(incidentParams[sessionId]) == 'undefined'){
@@ -111,13 +111,14 @@ generateResponse = function(req, res){
 			if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
 				serviceNowApi.createIncident(req.body.result.parameters)
 				.then((result)=>{
-					return botResponses.getSimpleReponse(txtMsg,null,null);
+					console.log(result);
+					return botResponses.getSimpleResponse(result,null,null);
 				})
 				.then((resp)=>{
 					resolve(resp);
 				})				
 				.catch((err)=>{
-					resolve(botResponses.getSimpleReponse(err,null,null));					
+					resolve(botResponses.getSimpleResponse(err,null,null));					
 				})
 			}else{
 				botResponses.inputPrompts(sessionId,  req, res)	
@@ -126,7 +127,7 @@ generateResponse = function(req, res){
 					resolve(result);
 				})				
 				.catch((err)=>{
-					resolve(botResponses.getSimpleReponse(err,null,null));
+					resolve(botResponses.getSimpleResponse(err,null,null));
 				});
 			}	
 		}		
