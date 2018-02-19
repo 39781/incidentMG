@@ -43,7 +43,7 @@ processRequest = function(req, res){
 		generateResponse(req, res)
 		.then(function(responseJson){	
 			console.log('responseJSON',responseJson);								
-			resolve(resp);
+			resolve(responseJson);
 		})
 		.catch(function(err){
 			console.log(err);
