@@ -32,21 +32,29 @@ var serviceNowApi = {
 					"messages": [{
 						"type": "simple_response",
 						"platform": "google",						
-					},
-					{
-					  "type": 0,
-					  "speech": ""
-					}
+					},					
 					]
 				}				
 				if (error) {
 					console.lg(error);
-					rsp.messages.displayText = JSON.stringify(error);
-					rsp.messages.textToSpeech = rsp.messages.displayText;
+					rsp.messages.push({
+						"type": "simple_response",
+						"platform": "google",						
+						displayText :JSON.stringify(error),
+						textToSpeech :rsp.messages.displayText;
+					});					
 				}else{
-					rsp.messages.textToSpeech= "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
-					rsp.messages.displayText= "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference"
+					rsp.messages.push({
+						"type": "simple_response",
+						"platform": "google",						
+						displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",,
+						textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",;
+					})					
 				}
+				rsp.messages.push({
+					  "type": 0,
+					  "speech": ""
+					});
 				console.log('rsp',JSON.stringify(rsp));
 				resolve(rsp);
 			});
