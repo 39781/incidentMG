@@ -9,23 +9,38 @@ responses.generateResponse = function(req, res){
 		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
-		var resolvedQuery = req.body.result.resolvedQuery;		
-		var params = Object.keys(req.body.result.parameters);
+		var resolvedQuery = req.body.result.resolvedQuery;				
 		
-		params.forEach(function(key){
-			if(req.body.result.parameters[key].length>0){
-				incidentParams[key] = req.body.result.parameters[key];
-			}
-		});	
-		if(recentInput){
-			incidentParams[recentInput] = resolvedQuery;
+		if(typeof(incidentParams[sessionId]) == 'undefined'){
+			incidentParams[sessionId] = {};
 		}
+		
+		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+			req.body.result.parameters[incidentParams[sessionId]['recentInput']] = resolvedQuery;
+		}
+		console.log('after recentinput',req.body.result.parameters);
+		var params = Object.keys(req.body.result.parameters);		
+				
+		for(i=0;i<params.length;i++){
+			if(req.body.result.parameters[params[i]].length<=0){
+				incidentParams[sessionId]['recentInput'] = 	params[i];
+				break;
+			}else{
+				delete incidentParams[sessionId]['recentInput'];
+			}				
+		}
+		/*params.forEach(function(key){
+			if(req.body.result.parameters[key].length>0){
+				incidentParams[sessionId][key] = req.body.result.parameters[key];
+			}
+		});*/	
+		
 		console.log(incidentParams);
-		var incidentParamsKeys = Object.keys(incidentParams);
-		if(incidentParamsKeys.length>=5){
+		var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
+		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
 			resolve('create');
 		}else{
-			inputPrompts(req, res)	
+			inputPrompts(sessionId,  req, res)	
 			.then((result)=>{
 				console.log('response from inputpromt',result);
 				resolve(result);
@@ -37,7 +52,7 @@ responses.generateResponse = function(req, res){
 	});
 }
 suggestionChips  = function(appHandler, content, contentType, params){
-	console.log(content, contentType);
+	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
 		  displayText: 'Please select option from '+contentType})
@@ -48,13 +63,13 @@ suggestionChips  = function(appHandler, content, contentType, params){
 		content.forEach(function(key){
 			chips.push({'title':key});
 		});
-		intentContextParams ={};
+		/*intentContextParams ={};
 		var paramsKeys = Object.keys(params);		
 		paramsKeys.forEach(function(key){
 			if(params[key].length>0){
 				intentContextParams[key] = params[key];
 			}
-		});	
+		});	*/
 		
 		console.log('intentContextParams',intentContextParams);
 		return {			
@@ -62,13 +77,13 @@ suggestionChips  = function(appHandler, content, contentType, params){
 			"contextOut": [{
 				 "name":"e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context", 
 				 "lifespan":2, 
-				 "parameters":intentContextParams
+				 "parameters":params
 			}],
 			"messages": [{
 				"type": "simple_response",
 				"platform": "google",
-				"textToSpeech": "Please select option from "+contentType,
-				"displayText": "Please select option from "+contentType
+				"textToSpeech": "Please select option from "+incidentParams[sessionId]['recentInput'],
+				"displayText": "Please select option from "+incidentParams[sessionId]['recentInput']
 			},
 			{
 			  "type": "suggestion_chips",
@@ -85,7 +100,7 @@ suggestionChips  = function(appHandler, content, contentType, params){
 	//return true;
 }
 
-function inputPrompts(req, res){
+function inputPrompts(sessionId,  req, res){
 	
 	return new Promise(function(resolve, reject){	
 		
@@ -101,23 +116,10 @@ function inputPrompts(req, res){
 			appHandler.handleRequest(actionMap);*/
 			
 			console.log('input prompting started');
-			if(typeof(incidentParams['category'])=='undefined'){
-				recentInput = 'category';
-				resolve(suggestionChips(appHandler, config.serviceNow['category'],'category',req.body.result.parameters))
-			}else if(typeof(incidentParams['subCategory'])=='undefined'){
-				recentInput = 'subCategory';
-				resolve(suggestionChips(appHandler, config.serviceNow['subCategory'],'subCategory', req.body.result.parameters));
-			}else if(typeof(incidentParams['contactType'])=='undefined'){
-				recentInput = 'contactType';
-				resolve(suggestionChips(appHandler, config.serviceNow['contactType'],'contactType', req.body.result.parameters));
-			}else if(typeof(incidentParams['impact'])=='undefined'){
-				recentInput = 'impact';
-				resolve(suggestionChips(appHandler, config.serviceNow['impact'],'impact', req.body.result.parameters));
-			}else if(typeof(incidentParams['urgency'])=='undefined'){
-				recentInput = 'urgency';
-				resolve(suggestionChips(appHandler, config.serviceNow['urgency'],'urgency', req.body.result.parameters));
+			if(typeof(req.body.result.parameters[incidentParams[sessionId]['recentInput']])=='undefined'){				
+				resolve(suggestionChips(appHandler, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
 			}else{
-				resolve('create');
+				resolve(true);
 			}
 		}catch(err){console.log('error',err);reject(err);}	
 		
