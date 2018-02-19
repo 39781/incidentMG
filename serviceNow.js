@@ -41,14 +41,14 @@ var serviceNowApi = {
 						"type": "simple_response",
 						"platform": "google",						
 						displayText :JSON.stringify(error),
-						textToSpeech :rsp.messages.displayText;
+						textToSpeech :rsp.messages.displayText
 					});					
 				}else{
 					rsp.messages.push({
 						"type": "simple_response",
 						"platform": "google",						
 						displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",,
-						textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",;
+						textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
 					})					
 				}
 				rsp.messages.push({
