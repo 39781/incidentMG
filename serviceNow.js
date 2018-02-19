@@ -77,8 +77,21 @@ var serviceNowApi = {
 					}else{
 						if(body.error){
 							txtMsg = "no record found for incident number you entered";							
-						}else{							
-							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+body.result[0][params.queryParam];
+						}else{			
+							if(params.queryParam||params.queryParam.length<=0){
+								params.queryParam = 'incident_state';
+							}
+							var sta;
+							switch(body.result[0][params.queryParam]){
+								case 1 : sta = "new";break;
+								case 2: sta = "in-prog";break;
+								case 3: sta = "on-hold";break;
+								case 6: sta = "resolved";break;
+								case 7: sta = "closed";break;
+								case 8: sta = "canceled";break;
+								default:sta = body.result[0][params.queryParam];break;
+							}						
+							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+sta;
 						}								
 						resolve(txtMsg);		
 					}
@@ -92,6 +105,11 @@ var serviceNowApi = {
 		});
 	}
 }
+
+
+
+
+
 
 
 module.exports = serviceNowApi;
