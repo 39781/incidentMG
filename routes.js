@@ -69,7 +69,7 @@ generateResponse = function(req, res){
 			serviceNowApi.trackIncident(req.body.result.parameters)
 			.then((result)=>{
 				if(result == "Please enter valid incident number"){	
-					return botResponses.getSimpleResponse(result,'trackIncident',req.body.result.parameters);
+					return botResponses.getSimpleResponse(result.msg,'trackIncident',result.params);
 				}else{
 					return botResponses.getSimpleResponse(result,null,null);
 				}

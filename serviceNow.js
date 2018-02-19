@@ -86,7 +86,7 @@ var serviceNowApi = {
 				//delete incidentTickets[sessId];
 			}else{		
 				txtMsg = "Please enter valid incident number";
-				resolve(txtMsg);
+				resolve({msg:txtMsg,"params":params});
 			}
 			
 		});
