@@ -96,7 +96,7 @@ var serviceNowApi = {
 							if(typeof(sta)=='undefined'){
 								sta = 'sorry data unavailable';
 							}
-							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam.replace(/ /ig,' ')+" : "+sta;
+							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam.replace(/_/ig,' ')+" : "+sta;
 						}								
 						resolve(txtMsg);		
 					}
