@@ -1,6 +1,6 @@
 var request			=	require('request');
 var serviceNowApi = {
-	createIncident:function (sessId){
+	createIncident:function (incident){
 		//console.log('creation started',incidentTickets[sessId]);		
 		return new Promise(function(resolve,reject){
 			var options = { 

@@ -116,7 +116,7 @@ function inputPrompts(sessionId,  req, res){
 			appHandler.handleRequest(actionMap);*/
 			
 			console.log('input prompting started');
-			if(typeof(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
+			if(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
 				resolve(suggestionChips(appHandler, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
 			}else{
 				resolve(true);
