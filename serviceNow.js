@@ -47,7 +47,7 @@ var serviceNowApi = {
 					rsp.messages.push({
 						"type": "simple_response",
 						"platform": "google",						
-						displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",,
+						displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
 						textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
 					})					
 				}
