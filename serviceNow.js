@@ -29,11 +29,7 @@ var serviceNowApi = {
 			request(options, function (error, response, body) {				
 				var rsp ={			
 					"speech": "",
-					"messages": [{
-						"type": "simple_response",
-						"platform": "google",						
-					},					
-					]
+					"messages": []
 				}				
 				if (error) {
 					console.lg(error);
