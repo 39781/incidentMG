@@ -83,15 +83,17 @@ var serviceNowApi = {
 							}
 							var sta;
 							console.log('queryParam',body.result[0][params.queryParam]);
-							switch(body.result[0][params.queryParam]){
-								case '1':case 1 : sta = "new";break;
-								case '2':case 2: sta = "in-prog";break;
-								case '3':case 3: sta = "on-hold";break;
-								case '6':case 6: sta = "resolved";break;
-								case '7':case 7: sta = "closed";break;
-								case '8':case 8: sta = "canceled";break;
-								default:sta = body.result[0][params.queryParam];break;
-							}						
+							if(params.queryParam == 'incident_state'||params.queryParam=='state'){
+								switch(body.result[0][params.queryParam]){
+									case '1':case 1 : sta = "new";break;
+									case '2':case 2: sta = "in-prog";break;
+									case '3':case 3: sta = "on-hold";break;
+									case '6':case 6: sta = "resolved";break;
+									case '7':case 7: sta = "closed";break;
+									case '8':case 8: sta = "canceled";break;
+									default:sta = body.result[0][params.queryParam];break;
+								}						
+							}
 							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+sta;
 						}								
 						resolve(txtMsg);		
