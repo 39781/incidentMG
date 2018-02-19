@@ -67,7 +67,7 @@ var serviceNowApi = {
 					"messages": []
 				}	
 			console.log(fstr == 'inc'&&!isNaN(sstr));
-			if(fstr == 'inc'&&!isNaN(sstr)){
+			if((fstr == 'inc'||fstr=='INC')&&!isNaN(sstr)){
 				var options = { 
 					method: 'GET',
 					url: 'https://dev18442.service-now.com/api/now/v1/table/incident',
@@ -121,7 +121,7 @@ var serviceNowApi = {
 						}],
 					followupEvent :{
 						name:"trackIncident",
-						data:{},
+						data:params,
 					}	
 				};
 				/*rsp.messages.push({
