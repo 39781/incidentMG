@@ -51,7 +51,7 @@ responses.generateResponse = function(req, res){
 		}		
 	});
 }
-suggestionChips  = function(appHandler, sessionId, content, contentType, params){
+suggestionChips  = function(appHandler, sessionId, content, params){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
