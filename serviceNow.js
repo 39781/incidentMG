@@ -78,7 +78,7 @@ var serviceNowApi = {
 						if(body.error){
 							txtMsg = "no record found for incident number you entered";							
 						}else{							
-							txtMsg = "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference";
+							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+body.result[0][params.queryParam];
 						}								
 						resolve(txtMsg);		
 					}
