@@ -70,8 +70,7 @@ suggestionChips  = function(appHandler, sessionId, content, contentType, params)
 				intentContextParams[key] = params[key];
 			}
 		});	*/
-		
-		console.log('intentContextParams',intentContextParams);
+				
 		return {			
 			"speech": "",
 			"contextOut": [{
