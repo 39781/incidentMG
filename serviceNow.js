@@ -81,7 +81,7 @@ var serviceNowApi = {
 							if(params.queryParam.length<=0){
 								params.queryParam = 'incident_state';
 							}
-							var sta;
+							var sta = body.result[0][params.queryParam];
 							console.log('queryParam',body.result[0][params.queryParam]);
 							if(params.queryParam == 'incident_state'||params.queryParam=='state'){
 								switch(body.result[0][params.queryParam]){
@@ -90,8 +90,7 @@ var serviceNowApi = {
 									case '3':case 3: sta = "on-hold";break;
 									case '6':case 6: sta = "resolved";break;
 									case '7':case 7: sta = "closed";break;
-									case '8':case 8: sta = "canceled";break;
-									default:sta = body.result[0][params.queryParam];break;
+									case '8':case 8: sta = "canceled";break;									
 								}						
 							}
 							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+sta;
