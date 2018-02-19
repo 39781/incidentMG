@@ -82,7 +82,8 @@ var serviceNowApi = {
 				};
 				request(options, function (error, response, body) {
 					console.log(JSON.stringify(body));
-					/*if (error) {
+					
+					if (error) {
 						console.lg(error);
 						rsp.messages.push({
 							"type": "simple_response",
@@ -91,23 +92,31 @@ var serviceNowApi = {
 							textToSpeech :rsp.messages.displayText
 						});					
 					}else{
-						rsp.messages.push({
-							"type": "simple_response",
-							"platform": "google",						
-							displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
-							textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
-						})					
+						if(body.error){
+							rsp.messages.push({
+								"type": "simple_response",
+								"platform": "google",						
+								displayText :"no record found",
+								textToSpeech :"no record found",
+							});
+						}else{							
+							rsp.messages.push({
+								"type": "simple_response",
+								"platform": "google",						
+								displayText :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][queryParam],
+								textToSpeech :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][queryParam]
+							});
+						}						
 					}
 					rsp.messages.push({
 						  "type": 0,
 						  "speech": ""
-						});
-					console.log('rsp',JSON.stringify(rsp));*/				
-					resolve(true);					
+						});					
+					resolve(rsp);					
 				});
 				//delete incidentTickets[sessId];
 			}else{
-				rsp ={			
+				/*rsp ={			
 					"speech": "",
 					displayText:"Please enter valid incident number",	
 					messages:[{
@@ -123,18 +132,17 @@ var serviceNowApi = {
 						name:"trackIncident",
 						data:params,
 					}	
-				};
-				/*rsp.messages.push({
+				};*/
+				rsp.messages.push({
 					"type": "simple_response",
 					"platform": "google",						
 					displayText :"Please enter valid incident number",
 					textToSpeech :"Please enter valid incident number",
-				})
-				rsp.	
-				rsp.followEvent ={
+				})				
+				rsp.followupEvent ={
 					name:"trackIncident",
-					data:{},
-				}			*/		
+					data:params,
+				}			
 				resolve(rsp);
 			}
 			
