@@ -107,16 +107,25 @@ var serviceNowApi = {
 				});
 				delete incidentTickets[sessId];
 			}else{
-				rsp.messages.push({
+				rsp ={			
+					"speech": "",
+					displayText:"Please enter valid incident number",	
+					followEvent :{
+						name:"trackIncident",
+						data:{},
+					}	
+				};
+				/*rsp.messages.push({
 					"type": "simple_response",
 					"platform": "google",						
 					displayText :"Please enter valid incident number",
 					textToSpeech :"Please enter valid incident number",
-				})				
+				})
+				rsp.	
 				rsp.followEvent ={
 					name:"trackIncident",
 					data:{},
-				}					
+				}			*/		
 				resolve(rsp);
 			}
 			
