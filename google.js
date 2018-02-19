@@ -51,7 +51,7 @@ responses.generateResponse = function(req, res){
 		}		
 	});
 }
-suggestionChips  = function(appHandler, content, contentType, params){
+suggestionChips  = function(appHandler, sessionId, content, contentType, params){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
@@ -117,7 +117,7 @@ function inputPrompts(sessionId,  req, res){
 			
 			console.log('input prompting started');
 			if(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
-				resolve(suggestionChips(appHandler, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
+				resolve(suggestionChips(appHandler, sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
 			}else{
 				resolve(true);
 			}
