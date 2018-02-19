@@ -78,12 +78,16 @@ responses.inputPrompts = function(sessionId,  req, res){
 		
 responses.getSimpleResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
+		displayTxtMsg='';
+		if(callBackIntent == 'visitAgain'){
+			displayTxtMsg  = "\nThank you for using me for create or track incident, I can help you please choose any one option";
+		}
 		var rsp ={			
 				"speech": "",					
 				"messages": [{
 					"type": "simple_response",
 					"platform": "google",						
-					displayText :txtMsg,
+					displayText :txtMsg+displayTxtMsg,
 					textToSpeech :txtMsg
 				},{
 				  "type": 0,
