@@ -38,9 +38,7 @@ router.post('/botHandler',function(req, res){
 
 processRequest = function(req, res){
 	return new Promise(function(resolve, reject){		
-		console.log(' process request started');
-		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
-		console.log(requestSource);		
+		console.log(' process request started');		
 		
 		generateResponse(req, res)
 		.then(function(responseJson){	
@@ -88,6 +86,10 @@ generateResponse = function(req, res){
 				incidentParams[sessionId][key] = req.body.result.parameters[key];
 			}
 		});*/	
+		
+		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
+		console.log(requestSource);		
+		
 		var botResponses = require('./'+requestSource);		
 		console.log(incidentParams);
 		var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
