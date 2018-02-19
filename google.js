@@ -76,7 +76,29 @@ responses.inputPrompts = function(sessionId,  req, res){
 }
 
 		
-
+responses.getSimpleResponse(txtMsg, callBackIntent, params){
+	return new Promise(function(resolve, reject){
+		var rsp ={			
+				"speech": "",					
+				"messages": [{
+					"type": "simple_response",
+					"platform": "google",						
+					displayText :txtMsg
+					textToSpeech :txtMsg
+				},{
+				  "type": 0,
+				  "speech": ""
+				}]
+			};
+		if(callBackIntent){
+			rsp.followupEvent ={
+				name:callBackIntent,
+				data:params,
+			}
+		}			
+		resolve(rsp);
+	});
+}
 
 
 responses.generateQuickReplyResponseOld = function(responseContent, responseViewModel){

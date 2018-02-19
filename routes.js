@@ -61,9 +61,24 @@ generateResponse = function(req, res){
 		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
-		var resolvedQuery = req.body.result.resolvedQuery;				
+		var resolvedQuery = req.body.result.resolvedQuery;	
+		var botResponses = require('./'+requestSource);		
+		
 		if(action == 'trackIncident'){
-			resolve(serviceNowApi.trackIncident(req.body.result.parameters));
+			serviceNowApi.trackIncident(req.body.result.parameters)
+			.then((result)=>{
+				if(result == "Please enter valid incident number"){	
+					return botResponses.getSimpleReponse(result.msg,'trackIncident',req.body.result.parameters);
+				}else{
+					return botResponses.getSimpleReponse(result.msg,null,null);
+				}
+			})
+			.then((resp)=>{
+				resolve(resp);
+			})	
+			.catch((err)=>{
+				resolve(botResponses.getSimpleReponse(err,null,null));				
+			})
 		}else{		
 			if(typeof(incidentParams[sessionId]) == 'undefined'){
 				incidentParams[sessionId] = {};
@@ -92,19 +107,27 @@ generateResponse = function(req, res){
 			let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
 			console.log(requestSource);		
 			
-			var botResponses = require('./'+requestSource);		
 			console.log(incidentParams);
 			var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
 			if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
-				resolve(serviceNowApi.createIncident(req.body.result.parameters));			
+				serviceNowApi.createIncident(req.body.result.parameters)
+				.then((result)=>{
+					return botResponses.getSimpleReponse(txtMsg,null,null);
+				})
+				.then((resp)=>{
+					resolve(resp);
+				})				
+				.catch((err)=>{
+					resolve(botResponses.getSimpleReponse(err,null,null));					
+				})
 			}else{
 				botResponses.inputPrompts(sessionId,  req, res)	
 				.then((result)=>{
 					console.log('response from inputpromt',result);
 					resolve(result);
-				})
+				})				
 				.catch((err)=>{
-					reject(err);
+					resolve(botResponses.getSimpleReponse(err,null,null));
 				});
 			}	
 		}		

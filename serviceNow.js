@@ -27,45 +27,31 @@ var serviceNowApi = {
 			}; 			
 			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {				
-				var rsp ={			
-					"speech": "",
-					"messages": []
-				}				
+				var txtMsg;			
 				if (error) {
-					console.lg(error);
-					rsp.messages.push({
-						"type": "simple_response",
-						"platform": "google",						
-						displayText :JSON.stringify(error),
-						textToSpeech :rsp.messages.displayText
-					});					
-				}else{
-					rsp.messages.push({
-						"type": "simple_response",
-						"platform": "google",						
-						displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
-						textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
-					})					
-				}
-				rsp.messages.push({
-					  "type": 0,
-					  "speech": ""
-					});
-				console.log('rsp',JSON.stringify(rsp));
-				resolve(rsp);
+					if(typeof(error)=='object'){
+						txtMsg = JSON.stringify(error);								
+					}else{
+						txtMsg = error;
+					}	
+						resolve(txtMsg);
+				}else{					
+					if(body.error){
+						txtMsg = "Error in incident creation";						
+					}else{						
+						txtMsg = "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference";
+					}					
+					resolve(txtMsg);
+				}												
 			});
-			
 		})
 	},
 	trackIncident:function (params){
 		return new Promise(function(resolve,reject){
 			console.log('tracking started');		
+			var txtMsg = "";
 			var fstr = params.incidentNum.substring(0,3);
-			var sstr = params.incidentNum.substring(3);
-			var rsp ={			
-					"speech": "",
-					"messages": []
-				}	
+			var sstr = params.incidentNum.substring(3);			
 			console.log(fstr == 'inc'&&!isNaN(sstr));
 			if((fstr == 'inc'||fstr=='INC')&&!isNaN(sstr)){
 				var options = { 
@@ -80,70 +66,27 @@ var serviceNowApi = {
 						authorization: 'Basic MzMyMzg6YWJjMTIz' 
 					},json: true  
 				};
-				request(options, function (error, response, body) {
-					console.log(JSON.stringify(body));
-					
-					if (error) {
-						console.lg(error);
-						rsp.messages.push({
-							"type": "simple_response",
-							"platform": "google",						
-							displayText :JSON.stringify(error),
-							textToSpeech :rsp.messages.displayText
-						});					
+				request(options, function (error, response, body) {										
+					if (error) {						
+						if(typeof(error)=='object'){
+							txtMsg = JSON.stringify(error);								
+						}else{
+							txtMsg = error;
+						}	
+						resolve(txtMsg);			
 					}else{
 						if(body.error){
-							rsp.messages.push({
-								"type": "simple_response",
-								"platform": "google",						
-								displayText :"no record found",
-								textToSpeech :"no record found",
-							});
+							txtMsg = "no record found for incident number you entered";							
 						}else{							
-							rsp.messages.push({
-								"type": "simple_response",
-								"platform": "google",						
-								displayText :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][params.queryParam],
-								textToSpeech :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][params.queryParam]
-							});
-						}						
+							txtMsg = "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference";
+						}					
+						resolve(txtMsg);		
 					}
-					rsp.messages.push({
-						  "type": 0,
-						  "speech": ""
-						});					
-					resolve(rsp);					
 				});
 				//delete incidentTickets[sessId];
-			}else{
-				/*rsp ={			
-					"speech": "",
-					displayText:"Please enter valid incident number",	
-					messages:[{
-						"type": "simple_response",
-						"platform": "google",						
-						displayText :"Please enter valid incident number",
-						textToSpeech :"Please enter valid incident number",
-					},{
-						  "type": 0,
-						  "speech": ""
-						}],
-					followupEvent :{
-						name:"trackIncident",
-						data:params,
-					}	
-				};*/
-				rsp.messages.push({
-					"type": "simple_response",
-					"platform": "google",						
-					displayText :"Please enter valid incident number",
-					textToSpeech :"Please enter valid incident number",
-				})				
-				rsp.followupEvent ={
-					name:"trackIncident",
-					data:params,
-				}			
-				resolve(rsp);
+			}else{		
+				txtMsg = "Please enter valid incident number";
+				resolve(txtMsg);
 			}
 			
 		});
