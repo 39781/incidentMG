@@ -78,7 +78,7 @@ var serviceNowApi = {
 						if(body.error){
 							txtMsg = "no record found for incident number you entered";							
 						}else{			
-							if(params.queryParam||params.queryParam.length<=0){
+							if(params.queryParam.length<=0){
 								params.queryParam = 'incident_state';
 							}
 							var sta;
