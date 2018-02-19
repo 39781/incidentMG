@@ -76,14 +76,14 @@ responses.inputPrompts = function(sessionId,  req, res){
 }
 
 		
-responses.getSimpleResponse(txtMsg, callBackIntent, params){
+responses.getSimpleResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var rsp ={			
 				"speech": "",					
 				"messages": [{
 					"type": "simple_response",
 					"platform": "google",						
-					displayText :txtMsg
+					displayText :txtMsg,
 					textToSpeech :txtMsg
 				},{
 				  "type": 0,
