@@ -2,55 +2,6 @@ const ActionsSdkApp = require('actions-on-google').DialogflowApp;
 var config = require('./config');
 var responses = {};
 
-responses.generateResponse = function(req, res){		
-	return new Promise(function(resolve, reject){		
-		console.log('generate response started',req.body.result.parameters);
-		
-		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
-		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
-		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
-		var resolvedQuery = req.body.result.resolvedQuery;				
-		
-		if(typeof(incidentParams[sessionId]) == 'undefined'){
-			incidentParams[sessionId] = {};
-		}
-		
-		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
-			req.body.result.parameters[incidentParams[sessionId]['recentInput']] = resolvedQuery;
-		}
-		console.log('after recentinput',req.body.result.parameters);
-		var params = Object.keys(req.body.result.parameters);		
-				
-		for(i=0;i<params.length;i++){
-			if(req.body.result.parameters[params[i]].length<=0){
-				incidentParams[sessionId]['recentInput'] = 	params[i];
-				break;
-			}else{
-				delete incidentParams[sessionId]['recentInput'];
-			}				
-		}
-		/*params.forEach(function(key){
-			if(req.body.result.parameters[key].length>0){
-				incidentParams[sessionId][key] = req.body.result.parameters[key];
-			}
-		});*/	
-		
-		console.log(incidentParams);
-		var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
-		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
-			resolve('create');
-		}else{
-			inputPrompts(sessionId,  req, res)	
-			.then((result)=>{
-				console.log('response from inputpromt',result);
-				resolve(result);
-			})
-			.catch((err)=>{
-				reject(err);
-			});
-		}		
-	});
-}
 suggestionChips  = function(appHandler, sessionId, content, params){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
@@ -99,7 +50,7 @@ suggestionChips  = function(appHandler, sessionId, content, params){
 	//return true;
 }
 
-function inputPrompts(sessionId,  req, res){
+responses.inputPrompts = function(sessionId,  req, res){
 	
 	return new Promise(function(resolve, reject){	
 		

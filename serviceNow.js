@@ -1,6 +1,6 @@
 var request			=	require('request');
 var serviceNowApi = {
-	createIncident:function (incident){
+	createIncident:function (incidentParams){
 		//console.log('creation started',incidentTickets[sessId]);		
 		return new Promise(function(resolve,reject){
 			var options = { 
@@ -24,8 +24,7 @@ var serviceNowApi = {
 					comments			: 	'Chatbot Testing'					
 				},			
 				json: true 
-			}; 
-			console.log();
+			}; 			
 			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {
 				console.log(body);

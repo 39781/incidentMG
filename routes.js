@@ -11,7 +11,7 @@ router.get('/',function(req, res){
 	res.send("req received");
 	res.end();
 })
-
+//return serviceNowApi.trackIncident(responseJson.incNum,responseJson.sessionId);
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));						
@@ -40,23 +40,11 @@ processRequest = function(req, res){
 	return new Promise(function(resolve, reject){		
 		console.log(' process request started');
 		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
-		console.log(requestSource);
-		var botResponses = require('./'+requestSource);		
+		console.log(requestSource);		
 		
-		botResponses.generateResponse(req, res)
+		generateResponse(req, res)
 		.then(function(responseJson){	
-			console.log('responseJSON',responseJson);
-			if(responseJson == 'create')	{			
-				return serviceNowApi.createIncident(responseJson.sessionId);
-			}else if(responseJson == 'track'){
-				return serviceNowApi.trackIncident(responseJson.incNum,responseJson.sessionId);
-			}else{				
-				return responseJson;
-			}
-			//responseJson.contextOut = inputContexts;						
-		})
-		.then(function(resp){
-			console.log(resp);
+			console.log('responseJSON',responseJson);								
 			resolve(resp);
 		})
 		.catch(function(err){
@@ -68,6 +56,55 @@ processRequest = function(req, res){
 	});
 }
 
+generateResponse = function(req, res){		
+	return new Promise(function(resolve, reject){		
+		console.log('generate response started',req.body.result.parameters);
+		
+		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
+		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
+		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
+		var resolvedQuery = req.body.result.resolvedQuery;				
+		
+		if(typeof(incidentParams[sessionId]) == 'undefined'){
+			incidentParams[sessionId] = {};
+		}
+		
+		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+			req.body.result.parameters[incidentParams[sessionId]['recentInput']] = resolvedQuery;
+		}
+		console.log('after recentinput',req.body.result.parameters);
+		var params = Object.keys(req.body.result.parameters);		
+				
+		for(i=0;i<params.length;i++){
+			if(req.body.result.parameters[params[i]].length<=0){
+				incidentParams[sessionId]['recentInput'] = 	params[i];
+				break;
+			}else{
+				delete incidentParams[sessionId]['recentInput'];
+			}				
+		}
+		/*params.forEach(function(key){
+			if(req.body.result.parameters[key].length>0){
+				incidentParams[sessionId][key] = req.body.result.parameters[key];
+			}
+		});*/	
+		var botResponses = require('./'+requestSource);		
+		console.log(incidentParams);
+		var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
+		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
+			resolve(serviceNowApi.createIncident(req.body.result.parameters));			
+		}else{
+			botResponses.inputPrompts(sessionId,  req, res)	
+			.then((result)=>{
+				console.log('response from inputpromt',result);
+				resolve(result);
+			})
+			.catch((err)=>{
+				reject(err);
+			});
+		}		
+	});
+}
 
 module.exports = router;
 
