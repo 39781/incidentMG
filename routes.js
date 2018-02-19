@@ -57,7 +57,8 @@ processRequest = function(req, res){
 generateResponse = function(req, res){		
 	return new Promise(function(resolve, reject){		
 		console.log('generate response started',req.body.result.parameters);
-		
+		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
+		console.log(requestSource);
 		let action = req.body.result.action; // https://dialogflow.com/docs/actions-and-parameters			
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
@@ -104,8 +105,6 @@ generateResponse = function(req, res){
 				}
 			});*/	
 			
-			let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
-			console.log(requestSource);		
 			
 			console.log(incidentParams);
 			var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
