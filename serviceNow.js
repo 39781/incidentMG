@@ -103,8 +103,8 @@ var serviceNowApi = {
 							rsp.messages.push({
 								"type": "simple_response",
 								"platform": "google",						
-								displayText :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][queryParam],
-								textToSpeech :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][queryParam]
+								displayText :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][params.queryParam],
+								textToSpeech :"Incident Number "+body.result[0].number+","+params.queryParam+ " : "+body.result[0][params.queryParam]
 							});
 						}						
 					}
