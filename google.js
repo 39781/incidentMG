@@ -89,7 +89,7 @@ responses.getSimpleResponse = function(txtMsg, callBackIntent, params){
 					"platform": "google",						
 					displayText :txtMsg+displayTxtMsg,
 					textToSpeech :txtMsg
-				}{
+				},{
 					title:"Create Incident",
 				},{
 					title:"Track Incident"
