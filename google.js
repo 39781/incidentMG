@@ -76,23 +76,22 @@ responses.inputPrompts = function(sessionId,  req, res){
 }
 
 		
-responses.getSimpleResponse = function(txtMsg, callBackIntent, params){
+responses.getFinalResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
-		var displayTxtMsg='';
-		if(callBackIntent == 'visitAgain'){
-			displayTxtMsg  = "\nThank you for using me for create or track incident, I can help you please choose any one option";
-		}
 		var rsp ={			
 				"speech": "",					
 				"messages": [{
 					"type": "simple_response",
 					"platform": "google",						
-					displayText :txtMsg+displayTxtMsg,
+					displayText :txtMsg+"\nThank you for using me for create or track incident, I can help you please choose any one option",
 					textToSpeech :txtMsg
-				},{
-					title:"Create Incident",
-				},{
-					title:"Track Incident"
+				},
+				{
+				  "type": "suggestion_chips",
+				  "platform": "google",
+				  "suggestions":[{title:"Create Incident"},
+								 {title:"Track Incident"}
+								]
 				},{
 				  "type": 0,
 				  "speech": ""
