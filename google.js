@@ -20,8 +20,7 @@ suggestionChips  = function(appHandler, sessionId, content, params){
 			if(params[key].length>0){
 				intentContextParams[key] = params[key];
 			}
-		});	*/
-				
+		});	*/				
 		return {			
 			"speech": "",
 			"contextOut": [{

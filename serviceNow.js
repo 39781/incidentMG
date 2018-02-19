@@ -17,7 +17,7 @@ var serviceNowApi = {
 					caller_id			: 	'TST',					
 					urgency				: 	incidentParams.urgency,
 					category			:	incidentParams.category,
-					subcategory			:	incidentParams.subCategory,
+					//subcategory			:	incidentParams.subCategory,
 					//workingGroup		:	incidentTickets[sessId].workingGroup,
 					impact				:	incidentParams.impact,					
 					contact_type		:	incidentParams.contactType,
@@ -57,27 +57,22 @@ var serviceNowApi = {
 			
 		})
 	},
-	trackIncident:function (incNum, sessId){
+	trackIncident:function (params){
 		return new Promise(function(resolve,reject){
 			console.log('tracking started');		
-			var fstr = incNum.substring(0,3);
-			var sstr = incNum.substring(3);
-			var rsp = {  
-						"speech":"",
-						"displayText":"",
-						"data":{  
-							"facebook":{  
-								"text":	""
-							}
-						}
-					}
-					console.log(fstr == 'inc'&&!isNaN(sstr));
+			var fstr = params.incidentNum.substring(0,3);
+			var sstr = params.incidentNum.substring(3);
+			var rsp ={			
+					"speech": "",
+					"messages": []
+				}	
+			console.log(fstr == 'inc'&&!isNaN(sstr));
 			if(fstr == 'inc'&&!isNaN(sstr)){
 				var options = { 
 					method: 'GET',
 					url: 'https://dev18442.service-now.com/api/now/v1/table/incident',
 					qs: { 
-						number: incNum.toUpperCase()
+						number: params.incidentNum.toUpperCase()
 					},
 					headers:{
 						'postman-token': '5441f224-d11a-2f78-69cd-51e58e2fbdb6',
@@ -86,22 +81,42 @@ var serviceNowApi = {
 					},json: true  
 				};
 				request(options, function (error, response, body) {
-					if (error) {
-						rsp.data.facebook.text = "Incident not exist : "+JSON.stringify(error);
-					}else{			
-						if(body.error){
-							rsp.data.facebook.text = "incident not exist\n please enter valid incident";
-						}else{
-							rsp.data.facebook.text = "incident exist : Incident updated on : "+body.result[0].sys_updated_on;
-						}
-						
-						
+					console.log(JSON.stringify(body));
+					/*if (error) {
+						console.lg(error);
+						rsp.messages.push({
+							"type": "simple_response",
+							"platform": "google",						
+							displayText :JSON.stringify(error),
+							textToSpeech :rsp.messages.displayText
+						});					
+					}else{
+						rsp.messages.push({
+							"type": "simple_response",
+							"platform": "google",						
+							displayText :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
+							textToSpeech :"Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
+						})					
 					}
-					resolve(rsp);
+					rsp.messages.push({
+						  "type": 0,
+						  "speech": ""
+						});
+					console.log('rsp',JSON.stringify(rsp));*/				
+					resolve(true);					
 				});
 				delete incidentTickets[sessId];
 			}else{
-				rsp.data.facebook.text = "Please enter valid incident number";
+				rsp.messages.push({
+					"type": "simple_response",
+					"platform": "google",						
+					displayText :"Please enter valid incident number",
+					textToSpeech :"Please enter valid incident number",
+				})				
+				rsp.followEvent ={
+					name:"trackIncident",
+					data:{},
+				}					
 				resolve(rsp);
 			}
 			
