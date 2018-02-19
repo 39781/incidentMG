@@ -93,7 +93,10 @@ var serviceNowApi = {
 									case '8':case 8: sta = "canceled";break;									
 								}						
 							}
-							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam+" : "+sta;
+							if(typeof(sta)=='undefined'){
+								sta = 'sorry data unavailable';
+							}
+							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam.replace(/ /ig,' ')+" : "+sta;
 						}								
 						resolve(txtMsg);		
 					}
