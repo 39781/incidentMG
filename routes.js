@@ -20,7 +20,7 @@ router.post('/botHandler',function(req, res){
 		.then(function(responseJson){			
 			res.status(200);
 			if(typeof(responseJson)=='object'){
-				console.log('responseJSON',responseJson,JSON.stringify(responseJson));								
+				console.log('responseJSON',JSON.stringify(responseJson));								
 				res.json(responseJson).end();
 			}else{
 				res.end();

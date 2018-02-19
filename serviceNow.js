@@ -44,9 +44,10 @@ var serviceNowApi = {
 					rsp.messages.displayText = JSON.stringify(error);
 					rsp.messages.textToSpeech = rsp.messages.displayText;
 				}else{
-					rsp.messages.textToSpeech= "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference",
-					rsp.messages.displayText= "Incident Created Ur Incident Number \n"+body.result.number+"\n please Note for future reference"
+					rsp.messages.textToSpeech= "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference",
+					rsp.messages.displayText= "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference"
 				}
+				console.log('rsp',JSON.stringify(rsp));
 				resolve(rsp);
 			});
 			
