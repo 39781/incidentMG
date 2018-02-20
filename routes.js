@@ -17,7 +17,10 @@ router.post('/botHandler',function(req, res){
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
 	var rsp ={
 			"speech": "",
-			"messages": [
+			"messages": [{
+			  "type": 0,
+			  "speech": ""
+			},
 				 {
 					"platform": "google",
 					"type": "simple_response",
@@ -52,11 +55,8 @@ router.post('/botHandler',function(req, res){
 				  "title": "Track Incident"
 				}
 			  ]
-			},
-			{
-			  "type": 0,
-			  "speech": ""
-			}]
+			}
+			]
 		};
 		res.json(rsp).end();
 	/*if (req.body.result||req.body.queryResult) {		
