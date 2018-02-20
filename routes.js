@@ -19,18 +19,20 @@ router.post('/botHandler',function(req, res){
 			"speech":"",
 			"data":{
   "google": {
-  "expect_user_response": false,
+  "expect_user_response": true,
   "rich_response": {
-  "items": [{
-           "simple_response": {
-              "text_to_speech": "This might be the first response"
-            }
-          },
+  "items": [
+    {
+      "simpleResponse": {
+          "textToSpeech":"This is the first simple response for a basic card"
+      }
+    },
     {
       "basicCard": {
-        "title":"simple text",
-        "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
-        "subtitle":"simple text",
+        "title":"Title: this is a title",
+        "formattedText":"This is a basic card.  Text in a\n      basic card can include \"quotes\" and most other unicode characters\n      including emoji 📱.  Basic cards also support some markdown\n      formatting like *emphasis* or _italics_, **strong** or __bold__,\n      and ***bold itallic*** or ___strong emphasis___ as well as other things\n      like line  \nbreaks",
+        "subtitle":
+        "This is a subtitle",
         "image": {
           "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
           "accessibilityText":"Image alternate text"
@@ -44,6 +46,12 @@ router.post('/botHandler',function(req, res){
           }
         ]
       }
+    },
+    {
+      "simpleResponse": {
+        "textToSpeech":"This is the 2nd simple response ",
+        "displayText":"This is the 2nd simple response"
+      }
     }
   ],
   "suggestions":
@@ -53,7 +61,7 @@ router.post('/botHandler',function(req, res){
   ]
 }
 }
-}			
+}		
 		};
 		res.json(rsp).end();
 	/*if (req.body.result||req.body.queryResult) {		
