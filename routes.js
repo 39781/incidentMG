@@ -15,7 +15,7 @@ router.get('/',function(req, res){
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
-	var rsp = var rsp ={
+var rsp ={
 			"speech": "",
 			"messages": [
 				 {
