@@ -16,49 +16,65 @@ router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
 	var rsp = {
-			"speech":"",
-			"data":{
-  "google": {
-  "expect_user_response": true,
-  "rich_response": {
-  "items": [
-  {},
-    {
-      "basicCard": {
-        "title":"Title: this is a title",
-        "formattedText":"This is a basic card.  Text in a\n      basic card can include \"quotes\" and most other unicode characters\n      including emoji 📱.  Basic cards also support some markdown\n      formatting like *emphasis* or _italics_, **strong** or __bold__,\n      and ***bold itallic*** or ___strong emphasis___ as well as other things\n      like line  \nbreaks",
-        "subtitle":
-        "This is a subtitle",
-        "image": {
-          "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
-          "accessibilityText":"Image alternate text"
+		"speech":"",
+    "data": {
+        "google": {
+            "expect_user_response": true,
+            "permissions_request": null
         },
-        "buttons": [
-          {
-            "title":"This is a button",
-            "openUrlAction":{
-              "url":"https://assistant.google.com/"
-            }
-          }
-        ]
-      }
     },
-    {
-      "simpleResponse": {
-        "textToSpeech":"This is the 2nd simple response ",
-        "displayText":"This is the 2nd simple response"
-      }
-    }
-  ],
-  "suggestions":
-  [
-    {"title":"Create Incident"},
-    {"title":"Track Incident"}    
-  ]
-}
-}
-}		
-		};
+    "messages": [
+        {
+            "speech": "content to be read aloud", /* this is the message required by Api.AI's web interface */
+            "type": 0
+        },
+
+        // Below are the Actions Rich Messages
+        {
+            "platform": "google",
+            "type": "simple_response",
+            "displayText": "top level text", /* basic top text used for screen devices */
+            "textToSpeech": "voice speech to be read out loud"  /* only used for voice interface */
+        },
+        {
+            "platform": "google",
+            "type": "basic_card",
+            "title": "title text",
+            "subtitle": "subtitle text",
+            "formattedText": "text with newlines and such",
+            "image": {
+                "url": "http://example.com/image.png",
+                "accessibilityText": "image descrition for screen readers"  /* this property is now required */
+            },
+            "buttons": [
+                {
+                    "title": "Link title",
+                    "openUrlAction": {
+                        "url": "https://example.com/linkout.html"
+                    }
+                }
+            ]
+        },
+        {
+            "platform": "google",
+            "type": "suggestion_chips",
+            "suggestions": [
+                {
+                    "title": "Next"
+                },
+                {
+                    "title": "Previous"
+                },
+                {
+                    "title": "Return to Results"
+                }
+            ]
+        },{
+			  "type": 1,
+			  "speech": ""
+			}
+    ]
+};
 		res.json(rsp).end();
 	/*if (req.body.result||req.body.queryResult) {		
 		processRequest(req, res)
