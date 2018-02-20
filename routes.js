@@ -18,6 +18,10 @@ router.post('/botHandler',function(req, res){
 var rsp ={
 			"speech": "",
 			"messages": [
+			{
+			  "type": 0,
+			  "speech": ""
+			},
 				 {
 					"platform": "google",
 					"type": "simple_response",
@@ -52,11 +56,8 @@ var rsp ={
 				  "title": "Track Incident"
 				}
 			  ]
-			},
-			{
-			  "type": 0,
-			  "speech": ""
-			}]
+			}
+			]
 		};
 		res.json(rsp).end();
 	/*if (req.body.result||req.body.queryResult) {		
