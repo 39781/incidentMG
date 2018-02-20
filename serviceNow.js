@@ -37,9 +37,9 @@ var serviceNowApi = {
 						resolve(txtMsg);
 				}else{					
 					if(body.error){
-						txtMsg = "Error in incident creation";						
+						txtMsg = "Error in incident creation ;\n Try again";						
 					}else{						
-						txtMsg = "Incident Created \n your Incident Number "+body.result.number+" please Note for future reference";
+						txtMsg = "Incident Number : "+body.result.number+";\nIncident Created";
 					}					
 					resolve(txtMsg);
 				}												
@@ -76,7 +76,7 @@ var serviceNowApi = {
 						resolve(txtMsg);			
 					}else{
 						if(body.error){
-							txtMsg = "no record found for incident number you entered";							
+							txtMsg = "no record found for incident number you entered; Try again";							
 						}else{			
 							if(params.queryParam.length<=0){
 								params.queryParam = 'incident_state';
@@ -94,9 +94,9 @@ var serviceNowApi = {
 								}						
 							}
 							if(typeof(sta)=='undefined'){
-								sta = 'sorry data unavailable';
+								sta = 'sorry data unavailable; Try again';
 							}
-							txtMsg = "Incident number "+body.result[0].number+",\n"+params.queryParam.replace(/_/ig,' ')+" : "+sta;
+							txtMsg = "Incident number "+body.result[0].number+"; \n"+params.queryParam.replace(/_/ig,' ')+" : "+sta;
 						}								
 						resolve(txtMsg);		
 					}

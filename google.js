@@ -74,10 +74,47 @@ responses.inputPrompts = function(sessionId,  req, res){
 		
 	});	
 }
-
-		
-responses.getFinalResponse = function(txtMsg, callBackIntent, params){
+responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
+		var data = txtMsg.split(';');
+		var rsp ={"speech": "",
+			"messages": [{
+				"type": "basic_card",
+				"platform": "google",
+				"title": data[0],
+				"subtitle": data[1],
+				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
+				"buttons": []
+			},
+			{
+			  "type": "suggestion_chips",
+			  "platform": "google",
+			  "suggestions": [
+				{
+				  "title": "Create Incident"
+				},
+				{
+				  "title": "Track Incident"
+				}
+			  ]
+			},
+			{
+			  "type": 0,
+			  "speech": ""
+			}]
+		};
+		if(callBackIntent){
+			rsp.followupEvent ={
+				name:callBackIntent,
+				data:params,
+			}
+		}			
+		resolve(rsp);
+	})
+}
+		
+responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
+	return new Promise(function(resolve, reject){		
 		var rsp ={			
 				"speech": "",					
 				"messages": [{
