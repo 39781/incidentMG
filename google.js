@@ -83,7 +83,11 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
   "google": {
   "expect_user_response": false,
   "rich_response": {
-  "items": [
+  "items": [{
+           "simple_response": {
+              "text_to_speech": "This might be the first response"
+            }
+          },
     {
       "basic_card": {
         "title":"simple text",
