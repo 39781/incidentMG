@@ -79,7 +79,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 		var data = textMsg.split(';');
 		var rsp = {
 			"speech":"",
-			"data":{
+			data:{
   "google": {
   "expect_user_response": true,
   "rich_response": {
