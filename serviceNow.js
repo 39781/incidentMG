@@ -39,7 +39,7 @@ var serviceNowApi = {
 					if(body.error){
 						txtMsg = "Error in incident creation";						
 					}else{						
-						txtMsg = "Incident Created Ur Incident Number "+body.result.number+" please Note for future reference";
+						txtMsg = "Incident Created \n your Incident Number "+body.result.number+" please Note for future reference";
 					}					
 					resolve(txtMsg);
 				}												
