@@ -77,7 +77,7 @@ responses.inputPrompts = function(sessionId,  req, res){
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');
-		var rsp = {
+		/*var rsp = {
 			"speech":"",
 			"data":{
   "google": {
@@ -113,7 +113,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 }
 }
 }
-			/*"data":{
+			"data":{
 			  "google": {
 					"expect_user_response": true,
 					  "rich_response": {
@@ -144,10 +144,10 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 					  ]
 					}
 				}
-			}*/
-		};
+			}
+		};*/
 
-		/*var rsp ={
+		var rsp ={
 			"speech": "",
 			"messages": [{
 				"type": "basic_card",
@@ -155,7 +155,16 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				"title": data[0],
 				"subtitle": data[1],
 				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
-				"buttons": []
+				"image": {
+							  "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+							  "accessibilityText":"serviceNow"
+							},
+				"buttons": [{
+								"title":"ServiceNow",
+								"openUrlAction":{
+								  "url":"dev18442.service-now.com"
+								}
+							  }]
 			},
 			{
 			  "type": "suggestion_chips",
@@ -173,7 +182,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			  "type": 0,
 			  "speech": ""
 			}]
-		};*/
+		};
 		if(callBackIntent){
 			rsp.followupEvent ={
 				name:callBackIntent,
