@@ -1,8 +1,7 @@
-const ActionsSdkApp = require('actions-on-google').DialogflowApp;
 var config = require('./config');
 var responses = {};
 
-quickReplies  = function(appHandler, sessionId, content, params){
+quickReplies  = function(sessionId, content, params){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
@@ -29,15 +28,13 @@ quickReplies  = function(appHandler, sessionId, content, params){
 				 "parameters":params
 			}],
 			"messages": [{
-				"type": "simple_response",
-				"platform": "google",
-				"textToSpeech": "Please select option from "+incidentParams[sessionId]['recentInput'],
-				"displayText": "Please select option from "+incidentParams[sessionId]['recentInput']
-			},
-			{
-			  "type": "suggestion_chips",
-			  "platform": "google",
-			  "suggestions":chips
+				  "type": 2,
+				  "platform": "slack",
+				  "title": "Please select option from "+incidentParams[sessionId]['recentInput'],
+				  "replies": [
+					"Track Incident",
+					"Create Incident"
+				  ]
 			},
 			{
 			  "type": 0,
@@ -52,21 +49,11 @@ quickReplies  = function(appHandler, sessionId, content, params){
 responses.inputPrompts = function(sessionId,  req, res){
 	
 	return new Promise(function(resolve, reject){	
-		
-		appHandler	= new ActionsSdkApp({request: req, response: res});
 		try{
-			/*let actionMap = new Map();	
-			actionMap.set('createIncident', suggestionChips);
-			actionMap.set('defaultIntent', suggestionChips);
-			actionMap.set(appHandler.StandardIntents.TEXT, suggestionChips)
-			//actionMap.set(actions.intent.TEXT)
-			//actionMap.set('createIncident', suggestionChips);	
-			
-			appHandler.handleRequest(actionMap);*/
-			
+						
 			console.log('input prompting started');
 			if(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
-				resolve(quickReplies(appHandler, sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
+				resolve(quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
 			}else{
 				resolve(true);
 			}
