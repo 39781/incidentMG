@@ -77,13 +77,13 @@ responses.inputPrompts = function(sessionId,  req, res){
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');
-		/*var rsp = {
+		var rsp = {
 			"speech":"",
 			"data":{
   "google": {
   "expect_user_response": false,
   "rich_response": {
-  "items": [
+  "items": [{},
     {
       "basicCard": {
         "title":data[0],
@@ -112,91 +112,9 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
   ]
 }
 }
-}
-			"data":{
-			  "google": {
-					"expect_user_response": true,
-					  "rich_response": {
-					  "items": [{
-						  "basicCard": {
-							"title":data[0],
-							"formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
-							"subtitle":data[1],
-							"image": {
-							  "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
-							  "accessibilityText":"serviceNow"
-							},
-							"buttons": [
-							  {
-								"title":"ServiceNow",
-								"openUrlAction":{
-								  "url":"dev18442.service-now.com"
-								}
-							  }
-							]
-						  }
-						}
-					  ],
-					  "suggestions":
-					  [
-						{"title":"Create Incident"},
-						{"title":"Track Incident"}						
-					  ]
-					}
-				}
-			}
-		};*/
-		var rsp = {
-			"speech":"",
-    "data": {
-        "google": {
-            "expect_user_response": true,
-            "permissions_request": null
-        },
-    },
-    "messages": [
-        {
-            "speech": "content to be read aloud", /* this is the message required by Api.AI's web interface */
-            "type": 0
-        },
-
-       
-        {
-            "platform": "google",
-            "type": "basic_card",
-            "title": "title text",
-            "subtitle": "subtitle text",
-            "formattedText": "text with newlines and such",
-            "image": {
-                "url": "http://example.com/image.png",
-                "accessibilityText": "image descrition for screen readers"  /* this property is now required */
-            },
-            "buttons": [
-                {
-                    "title": "Link title",
-                    "openUrlAction": {
-                        "url": "https://example.com/linkout.html"
-                    }
-                }
-            ]
-        },
-        {
-            "platform": "google",
-            "type": "suggestion_chips",
-            "suggestions": [
-                {
-                    "title": "Next"
-                },
-                {
-                    "title": "Previous"
-                },
-                {
-                    "title": "Return to Results"
-                }
-            ]
-        }
-    ]
-}	
+}			
+		};
+		
 		/*var rsp ={
 			"speech": "",
 			"messages": [{
