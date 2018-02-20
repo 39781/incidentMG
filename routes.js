@@ -15,7 +15,51 @@ router.get('/',function(req, res){
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
-	if (req.body.result||req.body.queryResult) {		
+	var rsp ={
+			"speech": "",
+			"messages": [
+				 {
+					"platform": "google",
+					"type": "simple_response",
+					"displayText": "sdsd", 
+					"textToSpeech": "sdsds" 
+				},
+				{
+				"type": "basic_card",
+				"platform": "google",
+				"title": data[0],
+				"subtitle": data[1],
+				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
+				"image": {
+							  "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+							  "accessibilityText":"serviceNow"
+							},
+				"buttons": [{
+								"title":"ServiceNow",
+								"openUrlAction":{
+								  "url":"dev18442.service-now.com"
+								}
+							  }]
+			},
+			{
+			  "type": "suggestion_chips",
+			  "platform": "google",
+			  "suggestions": [
+				{
+				  "title": "Create Incident"
+				},
+				{
+				  "title": "Track Incident"
+				}
+			  ]
+			},
+			{
+			  "type": 0,
+			  "speech": ""
+			}]
+		};
+		res.json(rsp).end();
+	/*if (req.body.result||req.body.queryResult) {		
 		processRequest(req, res)
 		.then(function(responseJson){			
 			res.status(200);
@@ -33,7 +77,7 @@ router.post('/botHandler',function(req, res){
 	} else {
 		console.log('Invalid Request');
 		return response.status(400).end('Invalid Webhook Request');
-	}
+	}*/
 });
 
 
