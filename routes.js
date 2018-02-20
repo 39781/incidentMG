@@ -15,23 +15,20 @@ router.get('/',function(req, res){
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
-	var rsp ={
+	var rsp = var rsp ={
 			"speech": "",
-			"messages": [{
-			  "type": 0,
-			  "speech": ""
-			},
+			"messages": [
 				 {
 					"platform": "google",
 					"type": "simple_response",
-					"displayText": "sdsd", 
-					"textToSpeech": "sdsds" 
+					"displayText": "", 
+					"textToSpeech": "" 
 				},
 				{
 				"type": "basic_card",
 				"platform": "google",
-				"title": data[0],
-				"subtitle": data[1],
+				"title": "sdsdsd",
+				"subtitle": "sdsds",
 				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
 				"image": {
 							  "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
@@ -55,8 +52,11 @@ router.post('/botHandler',function(req, res){
 				  "title": "Track Incident"
 				}
 			  ]
-			}
-			]
+			},
+			{
+			  "type": 0,
+			  "speech": ""
+			}]
 		};
 		res.json(rsp).end();
 	/*if (req.body.result||req.body.queryResult) {		
