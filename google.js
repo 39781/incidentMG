@@ -164,8 +164,8 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
         {
             "platform": "google",
             "type": "basic_card",
-            "title":data[0],
-            "subtitle": data[1],
+            "title": "title text",
+            "subtitle": "subtitle text",
             "formattedText": "text with newlines and such",
             "image": {
                 "url": "http://example.com/image.png",
