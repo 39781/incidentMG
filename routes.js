@@ -17,6 +17,12 @@ router.post('/botHandler',function(req, res){
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
 var rsp ={
 			"speech": "",
+			"data": {
+				"google": {
+					"expect_user_response": false,
+					"permissions_request": null
+				},
+			},
 			"messages": [
 			{
 			  "type": 0,
