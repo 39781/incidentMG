@@ -15,62 +15,7 @@ router.get('/',function(req, res){
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
-	var rsp = {
-		"speech":"",
-    "data": {
-        "google": {
-            "expect_user_response": true,
-            "permissions_request": null
-        },
-    },
-    "messages": [
-        {
-            "speech": "content to be read aloud", /* this is the message required by Api.AI's web interface */
-            "type": 1
-        },
-
-      
-        {
-            "platform": "google",
-            "type": "basic_card",
-            "title": "title text",
-            "subtitle": "subtitle text",
-            "formattedText": "text with newlines and such",
-            "image": {
-                "url": "http://example.com/image.png",
-                "accessibilityText": "image descrition for screen readers"  /* this property is now required */
-            },
-            "buttons": [
-                {
-                    "title": "Link title",
-                    "openUrlAction": {
-                        "url": "https://example.com/linkout.html"
-                    }
-                }
-            ]
-        },
-        {
-            "platform": "google",
-            "type": "suggestion_chips",
-            "suggestions": [
-                {
-                    "title": "Next"
-                },
-                {
-                    "title": "Previous"
-                },
-                {
-                    "title": "Return to Results"
-                }
-            ]
-        },{
-			  "type": 1,
-			  "speech": ""
-			}
-    ]
-};
-		res.json(rsp).end();
-	/*if (req.body.result||req.body.queryResult) {		
+	if (req.body.result||req.body.queryResult) {		
 		processRequest(req, res)
 		.then(function(responseJson){			
 			res.status(200);
@@ -88,7 +33,7 @@ router.post('/botHandler',function(req, res){
 	} else {
 		console.log('Invalid Request');
 		return response.status(400).end('Invalid Webhook Request');
-	}*/
+	}
 });
 
 

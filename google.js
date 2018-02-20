@@ -76,51 +76,18 @@ responses.inputPrompts = function(sessionId,  req, res){
 }
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
-		var data = textMsg.split(';');
-		var rsp = {
-			"speech":"",
-			"data":{
-  "google": {
-  "expect_user_response": false,
-  "rich_response": {
-  "items": [{
-           "simple_response": {
-              "text_to_speech": "This might be the first response"
-            }
-          },
-    {
-      "basic_card": {
-        "title":"simple text",
-        "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
-        "subtitle":"simple text",
-        "image": {
-          "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
-          "accessibilityText":"Image alternate text"
-        },
-        "buttons": [
-          {
-            "title":"This is a button",
-            "openUrlAction":{
-              "url":"https://assistant.google.com/"
-            }
-          }
-        ]
-      }
-    }
-  ],
-  "suggestions":
-  [
-    {"title":"Create Incident"},
-    {"title":"Track Incident"}    
-  ]
-}
-}
-}			
-		};
+		var data = textMsg.split(';');		
 		
-		/*var rsp ={
+		var rsp ={
 			"speech": "",
-			"messages": [{
+			"messages": [
+				 {
+					"platform": "google",
+					"type": "simple_response",
+					"displayText": "", 
+					"textToSpeech": "" 
+				},
+				{
 				"type": "basic_card",
 				"platform": "google",
 				"title": data[0],
@@ -153,7 +120,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			  "type": 0,
 			  "speech": ""
 			}]
-		};*/
+		};
 		if(callBackIntent){
 			rsp.followupEvent ={
 				name:callBackIntent,
