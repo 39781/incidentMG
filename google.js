@@ -92,7 +92,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				"platform": "google",
 				"title": data[0],
 				"subtitle": data[1],
-				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
+				"formattedText": "Thank you for using me, I can help you please choose any one option",
 				"image": {
 							  "url":"",
 							  "accessibilityText":"serviceNow"
