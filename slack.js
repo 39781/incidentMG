@@ -2,46 +2,26 @@ var config = require('./config');
 var responses = {};
 
 quickReplies  = function(sessionId, content, params){
-	console.log(content,incidentParams[sessionId]['recentInput']);
-	  /*appHandler.ask(appHandler.buildRichResponse()
-		.addSimpleResponse({speech: 'Please select option from '+contentType,
-		  displayText: 'Please select option from '+contentType})
-		.addSuggestions(content)			
-	  );*/	
-	  //return true;
-	  var chips = [];		
-		content.forEach(function(key){
-			chips.push({'title':key});
-		});
-		/*intentContextParams ={};
-		var paramsKeys = Object.keys(params);		
-		paramsKeys.forEach(function(key){
-			if(params[key].length>0){
-				intentContextParams[key] = params[key];
-			}
-		});	*/				
-		return {			
-			"speech": "",
-			"contextOut": [{
-				 "name":"e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context", 
-				 "lifespan":2, 
-				 "parameters":params
-			}],
-			"messages": [{
-				  "type": 2,
-				  "platform": "slack",
-				  "title": "Please select option from "+incidentParams[sessionId]['recentInput'],
-				  "replies": [
-					"Track Incident",
-					"Create Incident"
-				  ]
-			},
-			{
-			  "type": 0,
-			  "speech": ""
-			}
-			]
-		};
+	console.log(content,incidentParams[sessionId]['recentInput']);	  
+	return {			
+		"speech": "",
+		"contextOut": [{
+			 "name":"e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context", 
+			 "lifespan":2, 
+			 "parameters":params
+		}],
+		"messages": [{
+			  "type": 2,
+			  "platform": "slack",
+			  "title": "Please select option from "+incidentParams[sessionId]['recentInput'],
+			  "replies": content
+		},
+		{
+		  "type": 0,
+		  "speech": ""
+		}
+		]
+	};
 	  //console.log('hari');
 	//return true;
 }
