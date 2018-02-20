@@ -90,9 +90,9 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
           },
     {
       "basic_card": {
-        "title":data[0],
+        "title":"simple text"
         "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
-        "subtitle":data[1],
+        "subtitle":"simple text",
         "image": {
           "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
           "accessibilityText":"Image alternate text"
@@ -111,7 +111,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
   "suggestions":
   [
     {"title":"Create Incident"},
-    {"title":"Track Incident"},    
+    {"title":"Track Incident"}    
   ]
 }
 }
