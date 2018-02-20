@@ -106,12 +106,12 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 					  "suggestions":
 					  [
 						{"title":"Create Incident"},
-						{"title":"Track Incident"},						
+						{"title":"Track Incident"}						
 					  ]
 					}
 				}
 			}
-		}
+		};
 
 		/*var rsp ={
 			"speech": "",
