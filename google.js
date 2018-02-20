@@ -84,8 +84,8 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				 {
 					"platform": "google",
 					"type": "simple_response",
-					"displayText": "", 
-					"textToSpeech": "" 
+					"displayText": data[2], 
+					"textToSpeech": data[2], 
 				},
 				{
 				"type": "basic_card",
@@ -94,7 +94,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				"subtitle": data[1],
 				"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
 				"image": {
-							  "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+							  "url":"",
 							  "accessibilityText":"serviceNow"
 							},
 				"buttons": [{
@@ -132,14 +132,16 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 }
 		
 responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
-	return new Promise(function(resolve, reject){		
+	return new Promise(function(resolve, reject){	
+		var data = textMsg.split(';');			
+		
 		var rsp ={			
 				"speech": "",					
 				"messages": [{
 					"type": "simple_response",
 					"platform": "google",						
-					displayText :txtMsg+" Thank you for using me, I can help you please choose any one option",
-					textToSpeech :txtMsg
+					displayText :data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me, I can help you please choose any one option",
+					textToSpeech :data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me, I can help you please choose any one option"
 				},
 				{
 				  "type": "suggestion_chips",
