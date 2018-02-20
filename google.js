@@ -78,6 +78,8 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');
 		var rsp = {
+			"speech":"",
+			"data":{
   "google": {
   "expect_user_response": true,
   "rich_response": {
@@ -124,6 +126,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 }
 }
 }
+		}
 
 		/*var rsp ={
 			"speech": "",
