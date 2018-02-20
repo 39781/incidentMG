@@ -83,17 +83,12 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
   "google": {
   "expect_user_response": false,
   "rich_response": {
-  "items": [{
-           "simple_response": {
-              "text_to_speech": "This might be the first response"
-            }
-          },
+  "items": [
     {
-      "basicCard": {
+      "basic_card": {
         "title":data[0],
         "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
-        "subtitle":
-        data[1],
+        "subtitle":data[1],
         "image": {
           "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
           "accessibilityText":"Image alternate text"
