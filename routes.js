@@ -26,10 +26,10 @@ router.post('/botHandler',function(req, res){
     "messages": [
         {
             "speech": "content to be read aloud", /* this is the message required by Api.AI's web interface */
-            "type": 0
+            "type": 1
         },
 
-        
+      
         {
             "platform": "google",
             "type": "basic_card",
