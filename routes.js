@@ -29,13 +29,7 @@ router.post('/botHandler',function(req, res){
             "type": 0
         },
 
-        // Below are the Actions Rich Messages
-        {
-            "platform": "google",
-            "type": "simple_response",
-            "displayText": "top level text", /* basic top text used for screen devices */
-            "textToSpeech": "voice speech to be read out loud"  /* only used for voice interface */
-        },
+        
         {
             "platform": "google",
             "type": "basic_card",
