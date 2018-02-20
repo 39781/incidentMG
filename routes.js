@@ -22,7 +22,7 @@ router.post('/botHandler',function(req, res){
   "expect_user_response": true,
   "rich_response": {
   "items": [
-    
+  {},
     {
       "basicCard": {
         "title":"Title: this is a title",
