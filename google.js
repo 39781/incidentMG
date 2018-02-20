@@ -85,7 +85,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
           "platform": "google",
           "title": "Incident Number :  INC0012419",
           "subtitle": "Incident Created",
-          "formattedText": "please Note for future reference Thank you for using me, I\\n can help you please choose any one option",
+          "formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
           "buttons": []
         },
         {
