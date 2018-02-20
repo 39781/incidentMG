@@ -79,11 +79,17 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 		var data = textMsg.split(';');
 		var rsp = {
 			"speech":"",
-			data:{
+			"data":{
   "google": {
   "expect_user_response": true,
   "rich_response": {
-  "items": [{
+  "items": [
+    {
+      "simpleResponse": {
+          "textToSpeech":"This is the first simple response for a basic card"
+      }
+    },
+    {
       "basicCard": {
         "title":data[0],
         "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
