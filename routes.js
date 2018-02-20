@@ -27,7 +27,7 @@ router.post('/botHandler',function(req, res){
             }
           },
     {
-      "basic_card": {
+      "basicCard": {
         "title":"simple text",
         "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
         "subtitle":"simple text",
