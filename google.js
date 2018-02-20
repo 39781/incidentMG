@@ -77,7 +77,37 @@ responses.inputPrompts = function(sessionId,  req, res){
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');
-		var rsp ={"speech": "",
+		var rsp = {
+      "speech": "",
+      "messages": [
+        {
+          "type": "basic_card",
+          "platform": "google",
+          "title": "Incident Number :  INC0012419",
+          "subtitle": "Incident Created",
+          "formattedText": "please Note for future reference Thank you for using me, I\\n can help you please choose any one option",
+          "buttons": []
+        },
+        {
+          "type": "suggestion_chips",
+          "platform": "google",
+          "suggestions": [
+            {
+              "title": "Create Incident"
+            },
+            {
+              "title": "Track Incident"
+            }
+          ]
+        },
+        {
+          "type": 0,
+          "speech": ""
+        }
+      ]
+    };
+		/*var rsp ={
+			"speech": "",
 			"messages": [{
 				"type": "basic_card",
 				"platform": "google",
@@ -102,7 +132,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			  "type": 0,
 			  "speech": ""
 			}]
-		};
+		};*/
 		if(callBackIntent){
 			rsp.followupEvent ={
 				name:callBackIntent,
@@ -110,7 +140,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			}
 		}			
 		resolve(rsp);
-	})
+	});
 }
 		
 responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
