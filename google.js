@@ -120,7 +120,7 @@ responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
 				"messages": [{
 					"type": "simple_response",
 					"platform": "google",						
-					displayText :txtMsg+"\n Thank you for using me, I can help you please choose any one option",
+					displayText :txtMsg+" Thank you for using me, I can help you please choose any one option",
 					textToSpeech :txtMsg
 				},
 				{
