@@ -47,46 +47,26 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 		
 		var rsp ={
 			"speech": "",
-			"messages": [
-				 {
-					"platform": "google",
-					"type": "simple_response",
-					"displayText": data[2], 
-					"textToSpeech": data[2], 
-				},
+			"messages": [{
+				  "type": 1,
+				  "platform": "slack",
+				  "title": data[2]+"\n"+data[0],
+				  "subtitle": data[1]+"\nThank you for using me, I can help you please choose any one option",
+				  "buttons": [
+					{
+					  "text": "Create Incident",
+					  "postback": "Create Incident"
+					},
+					{
+					  "text": "Track Incident",
+					  "postback": ""
+					}
+				  ]
+				},				 
 				{
-				"type": "basic_card",
-				"platform": "google",
-				"title": data[0],
-				"subtitle": data[1],
-				"formattedText": "Thank you for using me, I can help you please choose any one option",
-				"image": {
-							  "url":"",
-							  "accessibilityText":"serviceNow"
-							},
-				"buttons": [{
-								"title":"ServiceNow",
-								"openUrlAction":{
-								  "url":"dev18442.service-now.com"
-								}
-							  }]
-			},
-			{
-			  "type": "suggestion_chips",
-			  "platform": "google",
-			  "suggestions": [
-				{
-				  "title": "Create Incident"
-				},
-				{
-				  "title": "Track Incident"
-				}
-			  ]
-			},
-			{
-			  "type": 0,
-			  "speech": ""
-			}]
+					"type": 0,
+					"speech": ""
+				}]
 		};
 		if(callBackIntent){
 			rsp.followupEvent ={
