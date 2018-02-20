@@ -146,8 +146,58 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				}
 			}
 		};*/
+		var rsp = {
+			"speech":"",
+    "data": {
+        "google": {
+            "expect_user_response": true,
+            "permissions_request": null
+        },
+    },
+    "messages": [
+        {
+            "speech": "content to be read aloud", /* this is the message required by Api.AI's web interface */
+            "type": 0
+        },
 
-		var rsp ={
+       
+        {
+            "platform": "google",
+            "type": "basic_card",
+            "title":data[0],
+            "subtitle": data[1],
+            "formattedText": "text with newlines and such",
+            "image": {
+                "url": "http://example.com/image.png",
+                "accessibilityText": "image descrition for screen readers"  /* this property is now required */
+            },
+            "buttons": [
+                {
+                    "title": "Link title",
+                    "openUrlAction": {
+                        "url": "https://example.com/linkout.html"
+                    }
+                }
+            ]
+        },
+        {
+            "platform": "google",
+            "type": "suggestion_chips",
+            "suggestions": [
+                {
+                    "title": "Next"
+                },
+                {
+                    "title": "Previous"
+                },
+                {
+                    "title": "Return to Results"
+                }
+            ]
+        }
+    ]
+}	
+		/*var rsp ={
 			"speech": "",
 			"messages": [{
 				"type": "basic_card",
@@ -182,7 +232,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			  "type": 0,
 			  "speech": ""
 			}]
-		};
+		};*/
 		if(callBackIntent){
 			rsp.followupEvent ={
 				name:callBackIntent,
