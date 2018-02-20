@@ -76,7 +76,7 @@ responses.inputPrompts = function(sessionId,  req, res){
 }
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
-		var data = txtMsg.split(';');
+		var data = textMsg.split(';');
 		var rsp ={"speech": "",
 			"messages": [{
 				"type": "basic_card",
