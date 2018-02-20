@@ -16,13 +16,7 @@ router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
 var rsp ={
-			"speech": "",
-			"data": {
-				"google": {
-					"expect_user_response": false,
-					"permissions_request": null
-				},
-			},
+			"speech": "",			
 			"messages": [
 			{
 			  "type": 0,
@@ -31,8 +25,8 @@ var rsp ={
 				 {
 					"platform": "google",
 					"type": "simple_response",
-					"displayText": "", 
-					"textToSpeech": "" 
+					"displayText": "sdsfs", 
+					"textToSpeech": "sfsfsdf" 
 				},
 				{
 				"type": "basic_card",
