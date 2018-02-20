@@ -81,14 +81,9 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 			"speech":"",
 			"data":{
   "google": {
-  "expect_user_response": true,
+  "expect_user_response": false,
   "rich_response": {
   "items": [
-    {
-      "simpleResponse": {
-          "textToSpeech":"This is the first simple response for a basic card"
-      }
-    },
     {
       "basicCard": {
         "title":data[0],
@@ -107,12 +102,6 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
             }
           }
         ]
-      }
-    },
-    {
-      "simpleResponse": {
-        "textToSpeech":"This is the 2nd simple response ",
-        "displayText":"This is the 2nd simple response"
       }
     }
   ],
