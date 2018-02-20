@@ -79,7 +79,54 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 		var data = textMsg.split(';');
 		var rsp = {
 			"speech":"",
-			"data":{
+			data:{
+  "google": {
+  "expect_user_response": true,
+  "rich_response": {
+  "items": [
+    {
+      "simpleResponse": {
+          "textToSpeech":"This is the first simple response for a basic card"
+      }
+    },
+    {
+      "basicCard": {
+        "title":data[0],
+        "formattedText":"please Note for future reference Thank you for using me, I can help you please choose any one option",
+        "subtitle":
+        data[1],
+        "image": {
+          "url":"https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+          "accessibilityText":"Image alternate text"
+        },
+        "buttons": [
+          {
+            "title":"This is a button",
+            "openUrlAction":{
+              "url":"https://assistant.google.com/"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "simpleResponse": {
+        "textToSpeech":"This is the 2nd simple response ",
+        "displayText":"This is the 2nd simple response"
+      }
+    }
+  ],
+  "suggestions":
+  [
+    {"title":"Basic Card"},
+    {"title":"List"},
+    {"title":"Carousel"},
+    {"title":"Suggestions"}
+  ]
+}
+}
+}
+			/*"data":{
 			  "google": {
 					"expect_user_response": true,
 					  "rich_response": {
@@ -110,7 +157,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 					  ]
 					}
 				}
-			}
+			}*/
 		};
 
 		/*var rsp ={
