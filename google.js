@@ -78,34 +78,41 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');
 		var rsp = {
-      "speech": "",
-      "messages": [
-        {
-          "type": "basic_card",
-          "platform": "google",
-          "title": "Incident Number :  INC0012419",
-          "subtitle": "Incident Created",
-          "formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
-          "buttons": []
-        },
-        {
-          "type": "suggestion_chips",
-          "platform": "google",
-          "suggestions": [
-            {
-              "title": "Create Incident"
-            },
-            {
-              "title": "Track Incident"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "speech": ""
-        }
-      ]
-    };
+	"speech": "",
+	"messages": [
+		{
+			"type": "basic_card",
+			"platform": "google",
+			"title": "Incident Number :  INC0012419",
+			"subtitle": "Incident Created",
+			"formattedText": "please Note for future reference Thank you for using me, I can help you please choose any one option",
+			"buttons": [
+				{
+					"title": "serviceNow",
+					"openUrlAction": {
+						"url": "dev18442.service-now.com"
+					}
+				}
+			]
+		},
+		{
+			"type": "suggestion_chips",
+			"platform": "google",
+			"suggestions": [
+				{
+					"title": "Create Incident"
+				},
+				{
+					"title": "Track Incident"
+				}
+			]
+		},
+		{
+			"type": 0,
+			"speech": ""
+		}
+	]
+};
 		/*var rsp ={
 			"speech": "",
 			"messages": [{
