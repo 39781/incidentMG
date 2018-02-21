@@ -88,7 +88,7 @@ responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
 				"messages": [{
 				  "type": 0,
 				  "platform": "slack",
-				  "speech": data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me\nI can help you"
+				  "speech": data[2]+"\n"+data[0]+"\n"+data[1]+"\n Thank you for using me\nI can help you"
 				},
 				{
 				  "type": 2,
