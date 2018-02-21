@@ -52,6 +52,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				  "platform": "slack",
 				  "title": data[2]+"\n"+data[0],
 				  "subtitle": data[1]+"\nThank you for using me, I can help you please choose any one option",
+				  "imageUrl": "https://raw.githubusercontent.com/39781/incidentMG/master/images/incidentMG.jpg",
 				  "buttons": [
 					{
 					  "text": "Create Incident",

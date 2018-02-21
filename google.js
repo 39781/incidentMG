@@ -94,7 +94,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 				"subtitle": data[1],
 				"formattedText": "Thank you for using me, I can help you please choose any one option",
 				"image": {
-							  "url":"",
+							  "url":"https://raw.githubusercontent.com/39781/incidentMG/master/images/incidentMG.jpg",
 							  "accessibilityText":"serviceNow"
 							},
 				"buttons": [{
