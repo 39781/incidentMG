@@ -81,7 +81,7 @@ responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 		
 responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){	
-		var data = textMsg.split(';');			
+		var data = txtMsg.split(';');			
 		
 	var rsp ={			
 				"speech": "",					
