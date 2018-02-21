@@ -70,16 +70,16 @@ generateResponse = function(req, res){
 			serviceNowApi.trackIncident(req.body.result.parameters)
 			.then((result)=>{
 				if(typeof(result)=='object'){	
-					return botResponses.getFinalSimpleResponse(result.msg,'trackIncident',result.params);
+					return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
 				}else{
-					return botResponses.getFinalSimpleResponse(result,null,null);
+					return botResponses.getFinalCardResponse(result,null,null);
 				}
 			})
 			.then((resp)=>{
 				resolve(resp);
 			})	
 			.catch((err)=>{
-				resolve(botResponses.getFinalSimpleResponse(err,null,null));				
+				resolve(botResponses.getFinalCardResponse(err,null,null));				
 			})
 		}else{		
 			if(typeof(incidentParams[sessionId]) == 'undefined'){
@@ -113,13 +113,13 @@ generateResponse = function(req, res){
 				serviceNowApi.createIncident(req.body.result.parameters)
 				.then((result)=>{
 					console.log(result);
-					return botResponses.getFinalSimpleResponse(result,null,null);
+					return botResponses.getFinalCardResponse(result,null,null);
 				})
 				.then((resp)=>{
 					resolve(resp);
 				})				
 				.catch((err)=>{
-					resolve(botResponses.getFinalSimpleResponse(err,null,null));					
+					resolve(botResponses.getFinalCardResponse(err,null,null));					
 				})
 			}else{
 				botResponses.inputPrompts(sessionId,  req, res)	
@@ -128,7 +128,7 @@ generateResponse = function(req, res){
 					resolve(result);
 				})				
 				.catch((err)=>{
-					resolve(botResponses.getFinalSimpleResponse(err,null,null));
+					resolve(botResponses.getFinalCardResponse(err,null,null));
 				});
 			}	
 		}		
