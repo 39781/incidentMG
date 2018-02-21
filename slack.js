@@ -83,7 +83,7 @@ responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){	
 		var data = textMsg.split(';');			
 		
-		var rsp =var rsp ={			
+	var rsp ={			
 				"speech": "",					
 				"messages": [{
 				  "type": 0,
