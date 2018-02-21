@@ -83,21 +83,20 @@ responses.getFinalSimpleResponse = function(txtMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){	
 		var data = textMsg.split(';');			
 		
-		var rsp ={			
+		var rsp =var rsp ={			
 				"speech": "",					
 				"messages": [{
-					"type": "simple_response",
-					"platform": "google",						
-					displayText :data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me, I can help you please choose any one option",
-					textToSpeech :data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me, I can help you please choose any one option"
+				  "type": 0,
+				  "platform": "slack",
+				  "speech": data[2]+" "+data[1]+" "+data[0]+"\n Thank you for using me\nI can help you"
 				},
 				{
-				  "type": "suggestion_chips",
-				  "platform": "google",
-				  "suggestions":[{title:"Create Incident"},
-								 {title:"Track Incident"}
-								]
-				},{
+				  "type": 2,
+				  "platform": "slack",
+				  "title": "Please select option",
+				  "replies": ["Create Incident","Track Incident"]
+				},		
+				{
 				  "type": 0,
 				  "speech": ""
 				}]
