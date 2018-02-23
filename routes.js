@@ -120,7 +120,7 @@ trackIncident = function(sessionId, params, errorFlag){
 					console.log('result',result);
 					if(result.status){
 						promptMsg = null;
-						return inputPrompts(result.sessId,  result.params, null,'quickReplies', context)
+						return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context);
 					}else{
 						incidentParams[sessionId]['recentInput'] = 'incidentNum';
 						result.params['incidentNum']="";
@@ -131,6 +131,7 @@ trackIncident = function(sessionId, params, errorFlag){
 					resolve(resp);
 				})
 				.catch((err)=>{
+					console.log(err);
 					resolve(botResponses.getFinalCardResponse(err,null,null));
 				});
 			}else{
@@ -190,8 +191,7 @@ createIncident = function(sessionId, params, errorFlag){
 	});
 }
 inputPrompts = function(sessionId,  params, promptMsg, promptType, context){	
-	return new Promise(function(resolve, reject){	
-		
+	return new Promise(function(resolve, reject){			
 		console.log('input prompting started');		
 		switch(promptType){
 			case 'simpleText':resolve(botResponses.simpleText(sessionId, promptMsg, params, context));break;
