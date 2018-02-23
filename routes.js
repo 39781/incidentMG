@@ -95,7 +95,7 @@ generateResponse = function(req, res){
 			func = createIncident;
 		}	
 		
-		func(sessionId, req.body.parameters)
+		func(sessionId, req.body.result.parameters,0)
 		.then((resp)=>{
 			resolve(resp);
 		})
