@@ -110,6 +110,8 @@ trackIncident = function(sessionId, params, errorFlag){
 		if(errorFlag){
 			promptMsg = "Please enter valid incident number";
 		}
+		console.log(promptMsg);
+		console.log('recentInput,',typeof(incidentParams[sessionId]['recentInput']));
 		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
 			if(params['incidentNum'].length>0){
 				serviceNowApi.validateIncidentNumber(params['incidentNum'], sessionId, params)
