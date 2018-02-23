@@ -138,7 +138,7 @@ trackIncident = function(sessionId, params, errorFlag){
 			});
 		}
 	}else{
-		serviceNowApi.trackIncident(req.body.result.parameters)
+		serviceNowApi.trackIncident(params)
 		.then((result)=>{
 			if(typeof(result)=='object'){	
 				return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
