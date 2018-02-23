@@ -192,7 +192,7 @@ createIncident = function(sessionId, params, errorFlag){
 }
 inputPrompts = function(sessionId,  params, promptMsg, promptType, context){	
 	return new Promise(function(resolve, reject){			
-		console.log('input prompting started');		
+		console.log('input prompting started', promptType, params);		
 		switch(promptType){
 			case 'simpleText':resolve(botResponses.simpleText(sessionId, promptMsg, params, context));break;
 			case 'quickReplies':resolve(botResponses.quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], params, context));break;
