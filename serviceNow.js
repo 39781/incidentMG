@@ -47,14 +47,8 @@ var serviceNowApi = {
 		})
 	},
 	trackIncident:function (params){
-		return new Promise(function(resolve,reject){
-			console.log('tracking started');		
-			var txtMsg = "";
-			var fstr = params.incidentNum.substring(0,3);
-			var sstr = params.incidentNum.substring(3);			
-			console.log(fstr == 'inc'&&!isNaN(sstr));
-			if((fstr == 'inc'||fstr=='INC')&&!isNaN(sstr)){
-				var options = { 
+		return new Promise(function(resolve,reject){			
+			var options = { 
 					method: 'GET',
 					url: 'https://dev18442.service-now.com/api/now/v1/table/incident',
 					qs: { 
@@ -85,7 +79,7 @@ var serviceNowApi = {
 							console.log('queryParam',body.result[0][params.queryParam]);
 							if(params.queryParam == 'incident_state'||params.queryParam=='state'){
 								switch(body.result[0][params.queryParam]){
-									case '1':case 1 : sta = "new";break;
+									case '1':case 1: sta = "new";	break;
 									case '2':case 2: sta = "in-prog";break;
 									case '3':case 3: sta = "on-hold";break;
 									case '6':case 6: sta = "resolved";break;
@@ -100,15 +94,29 @@ var serviceNowApi = {
 						}								
 						resolve(txtMsg);		
 					}
-				});
-				//delete incidentTickets[sessId];
-			}else{		
-				txtMsg = "Please enter valid incident number";
-				resolve({msg:txtMsg,"params":params});
-			}
+				});			
 			
 		});
+	},
+	validateIncidentNumber : function(incidentNumber, sessionId, params){
+		return new Promise(function(resolve,reject){
+			if(incidentNumber.length<=0){				
+				resolve({status:false,sessId:sessionId,"params":params});
+			}else{
+				console.log('tracking started');		
+				var txtMsg = "";
+				var fstr = params.incidentNum.substring(0,3);
+				var sstr = params.incidentNum.substring(3);			
+				console.log(fstr == 'inc'&&!isNaN(sstr));
+				if((fstr == 'inc'||fstr=='INC')&&!isNaN(sstr)){				
+					resolve({status:true,sessId:sessionId,"params":params});
+				}else{		
+					resolve({status:false,sessId:sessionId,"params":params});
+				}
+			}
+		});
 	}
+	
 }
 
 

@@ -4,7 +4,7 @@ var DialogflowApp	=	require('actions-on-google').DialogflowApp;
 
 var serviceNowApi 	=	require('./serviceNow');
 var sNow 			= 	require('./config');
-
+var botResponses	=	{};
 //var botResponses = require('./slack.js');
 router.get('/',function(req, res){
 	console.log('req received');
@@ -64,75 +64,131 @@ generateResponse = function(req, res){
 		let inputContexts = req.body.result.contexts; // https://dialogflow.com/docs/contexts	
 		var sessionId = (req.body.sessionId)?req.body.sessionId:'';
 		var resolvedQuery = req.body.result.resolvedQuery;	
-		var botResponses = require('./'+requestSource);		
+		botResponses = require('./'+requestSource);		
+		if(typeof(incidentParams[sessionId]) == 'undefined'){
+			incidentParams[sessionId] = {};
+		}
+			
+		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+			req.body.result.parameters[incidentParams[sessionId]['recentInput']] = resolvedQuery;
+		}
+		
+		console.log('after recentinput',req.body.result.parameters);
+		var params = Object.keys(req.body.result.parameters);		
+				
+		for(i=0;i<params.length;i++){
+			if(req.body.result.parameters[params[i]].length<=0){
+				incidentParams[sessionId]['recentInput'] = 	params[i];
+				break;
+			}else{
+				delete incidentParams[sessionId]['recentInput'];
+			}				
+		}
+								
+		console.log(incidentParams);
+		var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
 		
 		if(action == 'trackIncident'){
-			serviceNowApi.trackIncident(req.body.result.parameters)
+			func = trackIncident;
+		}else{
+			func = createIncident;
+		}	
+		
+		func(sessionId, req.body.parameters)
+		.then((resp)=>{
+			resolve(resp);
+		})
+		.catch((resp)=>{reject(resp);})
+	});
+}
+
+trackIncident = function(sessionId, params, errorFlag){
+	promptMsg = "Please enter incident number"
+	if(errorFlag){
+		promptMsg = "Please enter valid incident number";
+	}
+	if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+		if(params['incidentNum'].length>0){
+			serviceNowApi.validateIncidentNumber(params['incidentNum'], sessionId, params)
 			.then((result)=>{
-				if(typeof(result)=='object'){	
-					return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
+				if(result.status){
+					promptMsg = null;
+					return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies')
 				}else{
-					return botResponses.getFinalCardResponse(result,null,null);
+					result.params['incidentNum']="";
+					return trackIncident(result.sessId, result.params, 1);					
 				}
 			})
 			.then((resp)=>{
 				resolve(resp);
-			})	
-			.catch((err)=>{
-				resolve(botResponses.getFinalCardResponse(err,null,null));				
 			})
-		}else{		
-			if(typeof(incidentParams[sessionId]) == 'undefined'){
-				incidentParams[sessionId] = {};
-			}
-			
-			if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
-				req.body.result.parameters[incidentParams[sessionId]['recentInput']] = resolvedQuery;
-			}
-			console.log('after recentinput',req.body.result.parameters);
-			var params = Object.keys(req.body.result.parameters);		
-					
-			for(i=0;i<params.length;i++){
-				if(req.body.result.parameters[params[i]].length<=0){
-					incidentParams[sessionId]['recentInput'] = 	params[i];
-					break;
-				}else{
-					delete incidentParams[sessionId]['recentInput'];
-				}				
-			}
-			/*params.forEach(function(key){
-				if(req.body.result.parameters[key].length>0){
-					incidentParams[sessionId][key] = req.body.result.parameters[key];
-				}
-			});*/	
-			
-			
-			console.log(incidentParams);
-			var incidentParamsKeys = Object.keys(incidentParams[sessionId]);
-			if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
-				serviceNowApi.createIncident(req.body.result.parameters)
-				.then((result)=>{
-					console.log(result);
-					return botResponses.getFinalCardResponse(result,null,null);
-				})
-				.then((resp)=>{
-					resolve(resp);
-				})				
-				.catch((err)=>{
-					resolve(botResponses.getFinalCardResponse(err,null,null));					
-				})
+			.catch((err)=>{
+				resolve(botResponses.getFinalCardResponse(err,null,null));
+			});
+		}else{
+			inputPrompts(sessionId,  params, promptMsg,'simpleText')	
+			.then((result)=>{
+				console.log('response from inputpromt',result);
+				resolve(result);
+			})				
+			.catch((err)=>{
+				resolve(botResponses.getFinalCardResponse(err,null,null));
+			});
+		}
+	}else{
+		serviceNowApi.trackIncident(req.body.result.parameters)
+		.then((result)=>{
+			if(typeof(result)=='object'){	
+				return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
 			}else{
-				botResponses.inputPrompts(sessionId,  req, res)	
-				.then((result)=>{
-					console.log('response from inputpromt',result);
-					resolve(result);
-				})				
-				.catch((err)=>{
-					resolve(botResponses.getFinalCardResponse(err,null,null));
-				});
-			}	
+				return botResponses.getFinalCardResponse(result,null,null);
+			}
+		})
+		.then((resp)=>{
+			resolve(resp);
+		})	
+		.catch((err)=>{
+			resolve(botResponses.getFinalCardResponse(err,null,null));				
+		})
+	}
+}
+
+createIncident = function(sessionId, params, errorFlag){
+	return new Promise(function(resolve, reject){
+		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
+			serviceNowApi.createIncident(params)
+			.then((result)=>{
+				console.log(result);
+				return botResponses.getFinalCardResponse(result,null,null);
+			})
+			.then((resp)=>{
+				resolve(resp);
+			})				
+			.catch((err)=>{
+				resolve(botResponses.getFinalCardResponse(err,null,null));					
+			})
+		}else{
+			inputPrompts(sessionId,  params, null,'quickReplies')	
+			.then((result)=>{
+				console.log('response from inputpromt',result);
+				resolve(result);
+			})				
+			.catch((err)=>{
+				resolve(botResponses.getFinalCardResponse(err,null,null));
+			});
 		}		
 	});
+}
+inputPrompts = function(sessionId,  params, promptMsg, promptType){	
+	return new Promise(function(resolve, reject){	
+		
+		console.log('input prompting started');		
+		switch(promptType){
+			case 'simpleText':resolve(botResponses.simpleText(sessionId, promptMsg, params));break;
+			case 'quickReplies':resolve(botResponses.quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], params));break;
+		}					
+		
+	});	
 }
 
 module.exports = router;

@@ -1,8 +1,7 @@
-const ActionsSdkApp = require('actions-on-google').DialogflowApp;
 var config = require('./config');
 var responses = {};
 
-suggestionChips  = function(appHandler, sessionId, content, params){
+responses.quickReplies  = function(sessionId, content, params){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
@@ -48,32 +47,28 @@ suggestionChips  = function(appHandler, sessionId, content, params){
 	  //console.log('hari');
 	//return true;
 }
-
-responses.inputPrompts = function(sessionId,  req, res){
-	
-	return new Promise(function(resolve, reject){	
-		
-		appHandler	= new ActionsSdkApp({request: req, response: res});
-		try{
-			/*let actionMap = new Map();	
-			actionMap.set('createIncident', suggestionChips);
-			actionMap.set('defaultIntent', suggestionChips);
-			actionMap.set(appHandler.StandardIntents.TEXT, suggestionChips)
-			//actionMap.set(actions.intent.TEXT)
-			//actionMap.set('createIncident', suggestionChips);	
-			
-			appHandler.handleRequest(actionMap);*/
-			
-			console.log('input prompting started');
-			if(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
-				resolve(suggestionChips(appHandler, sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
-			}else{
-				resolve(true);
+responses.simpleText = function (sessionId, promptMsg, params){
+	return {			
+			"speech": "",
+			"contextOut": [{
+				 "name":"b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context", 
+				 "lifespan":2, 
+				 "parameters":params
+			}],
+			"messages": [{
+				"type": "simple_response",
+				"platform": "google",
+				"textToSpeech": "Please enter "+incidentParams[sessionId]['recentInput'],
+				"displayText": "Please enter "+incidentParams[sessionId]['recentInput']
+			},			
+			{
+			  "type": 0,
+			  "speech": ""
 			}
-		}catch(err){console.log('error',err);reject(err);}	
-		
-	});	
+			]
+		};
 }
+
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');		
