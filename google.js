@@ -58,8 +58,8 @@ responses.simpleText = function (sessionId, promptMsg, params, context){
 			"messages": [{
 				"type": "simple_response",
 				"platform": "google",
-				"textToSpeech": "Please enter "+incidentParams[sessionId]['recentInput'],
-				"displayText": "Please enter "+incidentParams[sessionId]['recentInput']
+				"textToSpeech": promptMsg,
+				"displayText": promptMsg
 			},			
 			{
 			  "type": 0,

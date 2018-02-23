@@ -6,7 +6,7 @@ var config ={
 		contactType 	: ['Email','Phone','Self-service','Walk-in'],		
 		impact 			: ['High','Medium','Low'],
 		urgency 		: ['High','Medium','Low'],
-		status			:  ["state","incident state","urgency","impact","caller","contact type"]		
+		queryParam			:  ["state","incident state","urgency","impact","caller","contact type"]		
 	},	
 }
 module.exports = config;
