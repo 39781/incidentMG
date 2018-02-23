@@ -111,7 +111,7 @@ trackIncident = function(sessionId, params, errorFlag){
 			promptMsg = "Please enter valid incident number";
 		}
 		console.log(promptMsg);
-		console.log('recentInput,',typeof(incidentParams[sessionId]['recentInput']));
+		console.log('recentInput,',incidentParams[sessionId]['recentInput'],typeof(incidentParams[sessionId]['recentInput']));
 		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
 			console.log('incident num length',params['incidentNum'].length);
 			if(params['incidentNum'].length>0){
