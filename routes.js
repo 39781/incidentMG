@@ -122,6 +122,7 @@ trackIncident = function(sessionId, params, errorFlag){
 						promptMsg = null;
 						return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context)
 					}else{
+						incidentParams[sessionId]['recentInput'] = 'incidentNum';
 						result.params['incidentNum']="";
 						return trackIncident(result.sessId, result.params, 1);					
 					}
