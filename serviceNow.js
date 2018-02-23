@@ -115,8 +115,7 @@ var serviceNowApi = {
 				}
 			}
 		});
-	}
-	
+	}	
 }
 
 

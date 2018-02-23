@@ -113,9 +113,11 @@ trackIncident = function(sessionId, params, errorFlag){
 		console.log(promptMsg);
 		console.log('recentInput,',typeof(incidentParams[sessionId]['recentInput']));
 		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+			console.log('incident num length',params['incidentNum'].length);
 			if(params['incidentNum'].length>0){
 				serviceNowApi.validateIncidentNumber(params['incidentNum'], sessionId, params)
 				.then((result)=>{
+					console.log('result',result);
 					if(result.status){
 						promptMsg = null;
 						return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context)
