@@ -104,58 +104,60 @@ generateResponse = function(req, res){
 }
 
 trackIncident = function(sessionId, params, errorFlag){
-	var context = "b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context";
-	var promptMsg = "Please enter incident number"
-	if(errorFlag){
-		promptMsg = "Please enter valid incident number";
-	}
-	if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
-		if(params['incidentNum'].length>0){
-			serviceNowApi.validateIncidentNumber(params['incidentNum'], sessionId, params)
+	return new Promise(function(resolve, reject){
+		var context = "b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context";
+		var promptMsg = "Please enter incident number"
+		if(errorFlag){
+			promptMsg = "Please enter valid incident number";
+		}
+		if(typeof(incidentParams[sessionId]['recentInput'])!='undefined'){
+			if(params['incidentNum'].length>0){
+				serviceNowApi.validateIncidentNumber(params['incidentNum'], sessionId, params)
+				.then((result)=>{
+					if(result.status){
+						promptMsg = null;
+						return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context)
+					}else{
+						result.params['incidentNum']="";
+						return trackIncident(result.sessId, result.params, 1);					
+					}
+				})
+				.then((resp)=>{
+					resolve(resp);
+				})
+				.catch((err)=>{
+					resolve(botResponses.getFinalCardResponse(err,null,null));
+				});
+			}else{
+				inputPrompts(sessionId,  params, promptMsg,'simpleText',context)	
+				.then((result)=>{
+					console.log('response from inputpromt',result);
+					resolve(result);
+				})				
+				.catch((err)=>{
+					resolve(botResponses.getFinalCardResponse(err,null,null));
+				});
+			}
+		}else{
+			serviceNowApi.trackIncident(params)
 			.then((result)=>{
-				if(result.status){
-					promptMsg = null;
-					return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context)
+				if(typeof(result)=='object'){	
+					return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
 				}else{
-					result.params['incidentNum']="";
-					return trackIncident(result.sessId, result.params, 1);					
+					return botResponses.getFinalCardResponse(result,null,null);
 				}
 			})
 			.then((resp)=>{
 				resolve(resp);
+			})	
+			.catch((err)=>{
+				resolve(botResponses.getFinalCardResponse(err,null,null));				
 			})
-			.catch((err)=>{
-				resolve(botResponses.getFinalCardResponse(err,null,null));
-			});
-		}else{
-			inputPrompts(sessionId,  params, promptMsg,'simpleText',context)	
-			.then((result)=>{
-				console.log('response from inputpromt',result);
-				resolve(result);
-			})				
-			.catch((err)=>{
-				resolve(botResponses.getFinalCardResponse(err,null,null));
-			});
 		}
-	}else{
-		serviceNowApi.trackIncident(params)
-		.then((result)=>{
-			if(typeof(result)=='object'){	
-				return botResponses.getFinalCardResponse(result.msg,'trackIncident',result.params);
-			}else{
-				return botResponses.getFinalCardResponse(result,null,null);
-			}
-		})
-		.then((resp)=>{
-			resolve(resp);
-		})	
-		.catch((err)=>{
-			resolve(botResponses.getFinalCardResponse(err,null,null));				
-		})
-	}
+	})
 }
 
-createIncident = function(sessionId, params, errorFlag){
+createIncident = function(sessionId, params, errorFlag){	
 	var context = "e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context";
 	return new Promise(function(resolve, reject){
 		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
