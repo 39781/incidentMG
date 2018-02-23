@@ -1,7 +1,7 @@
 var config = require('./config');
 var responses = {};
 
-responses.quickReplies  = function(sessionId, content, params){
+responses.quickReplies  = function(sessionId, content, params, context){
 	console.log(content,incidentParams[sessionId]['recentInput']);
 	  /*appHandler.ask(appHandler.buildRichResponse()
 		.addSimpleResponse({speech: 'Please select option from '+contentType,
@@ -23,7 +23,7 @@ responses.quickReplies  = function(sessionId, content, params){
 		return {			
 			"speech": "",
 			"contextOut": [{
-				 "name":"e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context", 
+				 "name":context, 
 				 "lifespan":2, 
 				 "parameters":params
 			}],
@@ -47,11 +47,11 @@ responses.quickReplies  = function(sessionId, content, params){
 	  //console.log('hari');
 	//return true;
 }
-responses.simpleText = function (sessionId, promptMsg, params){
+responses.simpleText = function (sessionId, promptMsg, params, context){
 	return {			
 			"speech": "",
 			"contextOut": [{
-				 "name":"b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context", 
+				 "name":context, 
 				 "lifespan":2, 
 				 "parameters":params
 			}],

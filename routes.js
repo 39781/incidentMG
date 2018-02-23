@@ -12,6 +12,7 @@ router.get('/',function(req, res){
 	res.end();
 })
 
+
 router.post('/botHandler',function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
 	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
@@ -103,7 +104,8 @@ generateResponse = function(req, res){
 }
 
 trackIncident = function(sessionId, params, errorFlag){
-	promptMsg = "Please enter incident number"
+	var context = "b015d80c-f1a5-40e2-911c-fba5be4d1ae6_id_dialog_context";
+	var promptMsg = "Please enter incident number"
 	if(errorFlag){
 		promptMsg = "Please enter valid incident number";
 	}
@@ -113,7 +115,7 @@ trackIncident = function(sessionId, params, errorFlag){
 			.then((result)=>{
 				if(result.status){
 					promptMsg = null;
-					return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies')
+					return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context)
 				}else{
 					result.params['incidentNum']="";
 					return trackIncident(result.sessId, result.params, 1);					
@@ -126,7 +128,7 @@ trackIncident = function(sessionId, params, errorFlag){
 				resolve(botResponses.getFinalCardResponse(err,null,null));
 			});
 		}else{
-			inputPrompts(sessionId,  params, promptMsg,'simpleText')	
+			inputPrompts(sessionId,  params, promptMsg,'simpleText',context)	
 			.then((result)=>{
 				console.log('response from inputpromt',result);
 				resolve(result);
@@ -154,6 +156,7 @@ trackIncident = function(sessionId, params, errorFlag){
 }
 
 createIncident = function(sessionId, params, errorFlag){
+	var context = "e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context";
 	return new Promise(function(resolve, reject){
 		if(typeof(incidentParams[sessionId]['recentInput'])=='undefined'){
 			serviceNowApi.createIncident(params)
@@ -168,7 +171,7 @@ createIncident = function(sessionId, params, errorFlag){
 				resolve(botResponses.getFinalCardResponse(err,null,null));					
 			})
 		}else{
-			inputPrompts(sessionId,  params, null,'quickReplies')	
+			inputPrompts(sessionId,  params, null,'quickReplies', context)	
 			.then((result)=>{
 				console.log('response from inputpromt',result);
 				resolve(result);
@@ -179,13 +182,13 @@ createIncident = function(sessionId, params, errorFlag){
 		}		
 	});
 }
-inputPrompts = function(sessionId,  params, promptMsg, promptType){	
+inputPrompts = function(sessionId,  params, promptMsg, promptType, context){	
 	return new Promise(function(resolve, reject){	
 		
 		console.log('input prompting started');		
 		switch(promptType){
-			case 'simpleText':resolve(botResponses.simpleText(sessionId, promptMsg, params));break;
-			case 'quickReplies':resolve(botResponses.quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], params));break;
+			case 'simpleText':resolve(botResponses.simpleText(sessionId, promptMsg, params, context));break;
+			case 'quickReplies':resolve(botResponses.quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], params, context));break;
 		}					
 		
 	});	
