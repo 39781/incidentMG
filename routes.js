@@ -3,7 +3,7 @@ var router			= express.Router();
 var DialogflowApp	=	require('actions-on-google').DialogflowApp;
 
 var serviceNowApi 	=	require('./serviceNow');
-var sNow 			= 	require('./config');
+var config 			= 	require('./config');
 var botResponses	=	{};
 //var botResponses = require('./slack.js');
 router.get('/',function(req, res){
