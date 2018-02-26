@@ -120,6 +120,7 @@ trackIncident = function(sessionId, params, errorFlag){
 					console.log('result',result);
 					if(result.status){
 						promptMsg = null;
+						incidentParams[sessionId]['recentInput'] = 'queryParam';
 						return inputPrompts(result.sessId,  result.params, promptMsg,'quickReplies', context);
 					}else{
 						incidentParams[sessionId]['recentInput'] = 'incidentNum';
