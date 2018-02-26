@@ -39,24 +39,8 @@ router.post('/botHandler',function(req, res){
 });
 
 
-processRequest = function(req, res){
-	return new Promise(function(resolve, reject){		
-		console.log(' process request started');		
-		
-		generateResponse(req, res)
-		.then(function(responseJson){				
-			resolve(responseJson);
-		})
-		.catch(function(err){
-			console.log(err);
-			reject(err);
-		})	
-		
-			
-	});
-}
 
-generateResponse = function(req, res){		
+processRequest = function(req, res){		
 	return new Promise(function(resolve, reject){		
 		console.log('generate response started',req.body.result.parameters);
 		let requestSource = (req.body.originalRequest) ? req.body.originalRequest.source : undefined;	
@@ -191,6 +175,7 @@ createIncident = function(sessionId, params, errorFlag){
 		}		
 	});
 }
+
 inputPrompts = function(sessionId,  params, promptMsg, promptType, context){	
 	return new Promise(function(resolve, reject){			
 		console.log('input prompting started', promptType, params);		

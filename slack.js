@@ -1,12 +1,12 @@
 var config = require('./config');
 var responses = {};
 
-quickReplies  = function(sessionId, content, params){
+responses.quickReplies  = function(sessionId, content, params,context){
 	console.log(content,incidentParams[sessionId]['recentInput']);	  
 	return {			
 		"speech": "",
 		"contextOut": [{
-			 "name":"e0e440c1-adc7-4b94-b9cb-a22a5629d79d_id_dialog_context", 
+			 "name":context, 
 			 "lifespan":2, 
 			 "parameters":params
 		}],
@@ -26,21 +26,26 @@ quickReplies  = function(sessionId, content, params){
 	//return true;
 }
 
-responses.inputPrompts = function(sessionId,  req, res){
-	
-	return new Promise(function(resolve, reject){	
-		try{
-						
-			console.log('input prompting started');
-			if(req.body.result.parameters[incidentParams[sessionId]['recentInput']].length<=0){				
-				resolve(quickReplies(sessionId, config.serviceNow[incidentParams[sessionId]['recentInput']], req.body.result.parameters));
-			}else{
-				resolve(true);
-			}
-		}catch(err){console.log('error',err);reject(err);}	
-		
-	});	
+responses.simpleText = function (sessionId, promptMsg, params, context){
+	var return ={			
+		"speech": "",		
+		"contextOut": [{
+			 "name":context, 
+			 "lifespan":2, 
+			 "parameters":params
+		}],				
+		"messages": [{
+		  "type": 0,
+		  "platform": "slack",
+		  "speech": promptMsg
+		},	
+		{
+		  "type": 0,
+		  "speech": ""
+		}]
+	};	
 }
+
 responses.getFinalCardResponse = function(textMsg, callBackIntent, params){
 	return new Promise(function(resolve, reject){
 		var data = textMsg.split(';');		
