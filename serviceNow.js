@@ -72,8 +72,9 @@ var serviceNowApi = {
 						if(body.error){
 							txtMsg = "no record found for incident number you entered; Try again ; Incident Tracked";							
 						}else{			
-							if(params.queryParam.length<=0){
-								params.queryParam = 'incident_state';
+							
+							if(params.queryParam.length<=0||params.queryParam == 'incident state'){
+								params.queryParam = 'incident_state';								
 							}
 							var sta = body.result[0][params.queryParam];
 							console.log('queryParam',body.result[0][params.queryParam]);
