@@ -5,6 +5,7 @@ var DialogflowApp	=	require('actions-on-google').DialogflowApp;
 var serviceNowApi 	=	require('./serviceNow');
 var config 			= 	require('./config');
 var botResponses	=	{};
+var botResponses = require('./facebook.js');
 //var botResponses = require('./slack.js');
 router.get('/',function(req, res){
 	console.log('req received');

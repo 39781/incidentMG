@@ -26,7 +26,7 @@ responses.quickReplies  = function(sessionId, content, params, context){
 	//return true;
 }
 responses.simpleText = function (sessionId, promptMsg, params, context){
-	var return ={			
+	return {			
 		"speech": "",		
 		"contextOut": [{
 			 "name":context, 
