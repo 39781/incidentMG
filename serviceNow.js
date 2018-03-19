@@ -38,7 +38,9 @@ var serviceNowApi = {
 					}	
 						resolve(txtMsg);
 				}else{									
-					if(body.error){
+					if(body.indexOf("Sorry, I got bored and fell asleep")>=0){
+						txtMsg = "Sorry, I got bored and fell asleep. Sign in to the Developer Site and I will be ready to report for duty! Examine the FAQ to learn more about sleepy instances";
+					}else if(body.error){
 						txtMsg = "Error in incident creation ; Try again ; Incident Created";						
 					}else{						
 						txtMsg = "Incident Number : "+body.result.number+"; Please note for future reference; Incident Created";
