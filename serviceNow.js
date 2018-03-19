@@ -27,6 +27,8 @@ var serviceNowApi = {
 			}; 			
 			//delete incidentTickets[sessId];		
 			request(options, function (error, response, body) {				
+			console.log('body',body);
+			console.log('error',error);
 				var txtMsg;			
 				if (error) {
 					if(typeof(error)=='object'){
@@ -35,7 +37,7 @@ var serviceNowApi = {
 						txtMsg = error;
 					}	
 						resolve(txtMsg);
-				}else{					
+				}else{									
 					if(body.error){
 						txtMsg = "Error in incident creation ; Try again ; Incident Created";						
 					}else{						
